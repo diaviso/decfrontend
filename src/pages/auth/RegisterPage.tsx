@@ -57,10 +57,10 @@ export function RegisterPage() {
         <p className="text-muted-foreground mt-2">Plateforme d'apprentissage</p>
       </div>
 
-      <Card className="border-0 shadow-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+      <Card className="border border-slate-200 dark:border-slate-700/50 shadow-2xl bg-white dark:bg-slate-900/90 backdrop-blur-xl">
         <CardHeader className="space-y-1 pb-4">
-          <CardTitle className="text-2xl font-bold">Créer un compte</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-2xl font-bold text-slate-900 dark:text-white">Créer un compte</CardTitle>
+          <CardDescription className="text-slate-600 dark:text-slate-400">
             Inscrivez-vous pour commencer votre apprentissage
           </CardDescription>
         </CardHeader>
@@ -98,7 +98,7 @@ export function RegisterPage() {
               <Separator className="w-full" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white dark:bg-slate-900 px-2 text-muted-foreground">
+              <span className="bg-white dark:bg-slate-900 px-2 text-slate-500 dark:text-slate-400">
                 Ou continuer avec
               </span>
             </div>
@@ -108,7 +108,7 @@ export function RegisterPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="firstName">Prénom</Label>
+                <Label htmlFor="firstName" className="text-slate-700 dark:text-slate-300">Prénom</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -123,7 +123,7 @@ export function RegisterPage() {
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="lastName">Nom</Label>
+                <Label htmlFor="lastName" className="text-slate-700 dark:text-slate-300">Nom</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                   <Input
@@ -140,7 +140,7 @@ export function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-slate-700 dark:text-slate-300">Email</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -156,7 +156,7 @@ export function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">Mot de passe</Label>
+              <Label htmlFor="password" className="text-slate-700 dark:text-slate-300">Mot de passe</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -172,12 +172,12 @@ export function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-slate-500 dark:text-slate-400">
                 Minimum 6 caractères
               </p>
             </div>
@@ -201,9 +201,9 @@ export function RegisterPage() {
             </motion.div>
           </form>
 
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-center text-sm text-slate-600 dark:text-slate-400">
             Déjà un compte ?{' '}
-            <Link to="/login" className="text-primary font-medium hover:underline">
+            <Link to="/login" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">
               Se connecter
             </Link>
           </p>

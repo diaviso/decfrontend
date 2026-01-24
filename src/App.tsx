@@ -29,6 +29,7 @@ import { SettingsPage } from '@/pages/settings/SettingsPage';
 import { UsersPage } from '@/pages/users/UsersPage';
 import { LeaderboardPage } from '@/pages/leaderboard/LeaderboardPage';
 import { HistoryPage } from '@/pages/history/HistoryPage';
+import { DocumentsPage } from '@/pages/documents/DocumentsPage';
 import { useAuthStore } from '@/store/auth';
 import './index.css';
 
@@ -107,6 +108,7 @@ function App() {
             <Route path="/leaderboard" element={<LeaderboardPage />} />
             <Route path="/history" element={<HistoryPage />} />
             <Route path="/users" element={<UsersPage />} />
+            <Route path="/documents" element={<DocumentsPage />} />
           </Route>
 
           {/* Fallback */}

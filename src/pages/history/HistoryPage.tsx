@@ -183,61 +183,73 @@ export function HistoryPage() {
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
         >
           <motion.div variants={item}>
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/50 dark:to-indigo-950/50">
+            <Card className="border border-blue-200 dark:border-blue-800/50 shadow-lg bg-white dark:bg-slate-900/80">
               <CardContent className="pt-6 text-center">
-                <BarChart3 className="h-8 w-8 mx-auto text-blue-600 dark:text-blue-400 mb-2" />
-                <p className="text-2xl font-bold">{stats.totalAttempts}</p>
-                <p className="text-xs text-muted-foreground">Tentatives</p>
+                <div className="w-12 h-12 mx-auto rounded-xl bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center mb-3">
+                  <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                </div>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.totalAttempts}</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Tentatives</p>
               </CardContent>
             </Card>
           </motion.div>
 
           <motion.div variants={item}>
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-950/50 dark:to-teal-950/50">
+            <Card className="border border-emerald-200 dark:border-emerald-800/50 shadow-lg bg-white dark:bg-slate-900/80">
               <CardContent className="pt-6 text-center">
-                <CheckCircle className="h-8 w-8 mx-auto text-emerald-600 dark:text-emerald-400 mb-2" />
-                <p className="text-2xl font-bold">{stats.passedAttempts}</p>
-                <p className="text-xs text-muted-foreground">Réussites</p>
+                <div className="w-12 h-12 mx-auto rounded-xl bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center mb-3">
+                  <CheckCircle className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                </div>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.passedAttempts}</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Réussites</p>
               </CardContent>
             </Card>
           </motion.div>
 
           <motion.div variants={item}>
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-950/50 dark:to-pink-950/50">
+            <Card className="border border-rose-200 dark:border-rose-800/50 shadow-lg bg-white dark:bg-slate-900/80">
               <CardContent className="pt-6 text-center">
-                <XCircle className="h-8 w-8 mx-auto text-rose-600 dark:text-rose-400 mb-2" />
-                <p className="text-2xl font-bold">{stats.failedAttempts}</p>
-                <p className="text-xs text-muted-foreground">Échecs</p>
+                <div className="w-12 h-12 mx-auto rounded-xl bg-rose-100 dark:bg-rose-900/50 flex items-center justify-center mb-3">
+                  <XCircle className="h-6 w-6 text-rose-600 dark:text-rose-400" />
+                </div>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.failedAttempts}</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Échecs</p>
               </CardContent>
             </Card>
           </motion.div>
 
           <motion.div variants={item}>
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/50 dark:to-yellow-950/50">
+            <Card className="border border-amber-200 dark:border-amber-800/50 shadow-lg bg-white dark:bg-slate-900/80">
               <CardContent className="pt-6 text-center">
-                <Star className="h-8 w-8 mx-auto text-amber-600 dark:text-amber-400 mb-2 fill-amber-500" />
-                <p className="text-2xl font-bold">{stats.totalStars}</p>
-                <p className="text-xs text-muted-foreground">Étoiles gagnées</p>
+                <div className="w-12 h-12 mx-auto rounded-xl bg-amber-100 dark:bg-amber-900/50 flex items-center justify-center mb-3">
+                  <Star className="h-6 w-6 text-amber-600 dark:text-amber-400 fill-amber-500" />
+                </div>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.totalStars}</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Étoiles gagnées</p>
               </CardContent>
             </Card>
           </motion.div>
 
           <motion.div variants={item}>
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-950/50 dark:to-violet-950/50">
+            <Card className="border border-purple-200 dark:border-purple-800/50 shadow-lg bg-white dark:bg-slate-900/80">
               <CardContent className="pt-6 text-center">
-                <Target className="h-8 w-8 mx-auto text-purple-600 dark:text-purple-400 mb-2" />
-                <p className="text-2xl font-bold">{stats.averageScore}%</p>
-                <p className="text-xs text-muted-foreground">Score moyen</p>
+                <div className="w-12 h-12 mx-auto rounded-xl bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center mb-3">
+                  <Target className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                </div>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.averageScore}%</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Score moyen</p>
               </CardContent>
             </Card>
           </motion.div>
 
           <motion.div variants={item}>
-            <Card className="border-0 shadow-lg bg-gradient-to-br from-cyan-50 to-sky-50 dark:from-cyan-950/50 dark:to-sky-950/50">
+            <Card className="border border-cyan-200 dark:border-cyan-800/50 shadow-lg bg-white dark:bg-slate-900/80">
               <CardContent className="pt-6 text-center">
-                <TrendingUp className="h-8 w-8 mx-auto text-cyan-600 dark:text-cyan-400 mb-2" />
-                <p className="text-2xl font-bold">{stats.bestScore}%</p>
-                <p className="text-xs text-muted-foreground">Meilleur score</p>
+                <div className="w-12 h-12 mx-auto rounded-xl bg-cyan-100 dark:bg-cyan-900/50 flex items-center justify-center mb-3">
+                  <TrendingUp className="h-6 w-6 text-cyan-600 dark:text-cyan-400" />
+                </div>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.bestScore}%</p>
+                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Meilleur score</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -245,9 +257,9 @@ export function HistoryPage() {
       )}
 
       {/* Filter and List */}
-      <Card className="border-0 shadow-lg">
+      <Card className="border border-slate-200 dark:border-slate-700/50 shadow-lg bg-white dark:bg-slate-900/80">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <CardTitle className="text-xl font-semibold">Toutes les tentatives</CardTitle>
+          <CardTitle className="text-xl font-semibold text-slate-900 text-blue-500">Toutes les tentatives</CardTitle>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="gap-2">
@@ -303,10 +315,10 @@ export function HistoryPage() {
                     <Link to={`/quizzes/${attempt.quizId}`}>
                       <div
                         className={cn(
-                          'p-4 rounded-xl border-2 transition-all hover:shadow-md cursor-pointer',
+                          'p-4 rounded-xl border-2 transition-all hover:shadow-lg cursor-pointer',
                           passed
-                            ? 'border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-emerald-950/20 hover:border-emerald-300'
-                            : 'border-rose-200 dark:border-rose-800 bg-rose-50/50 dark:bg-rose-950/20 hover:border-rose-300'
+                            ? 'border-emerald-200 dark:border-emerald-700/70 bg-white dark:bg-slate-900/80 hover:border-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/30'
+                            : 'border-rose-200 dark:border-rose-700/70 bg-white dark:bg-slate-900/80 hover:border-rose-300 hover:bg-rose-50 dark:hover:bg-rose-950/30'
                         )}
                       >
                         <div className="flex items-center justify-between gap-4">
@@ -327,12 +339,12 @@ export function HistoryPage() {
                             </div>
                             <div className="min-w-0 flex-1">
                               <div className="flex items-center gap-2 mb-1 flex-wrap">
-                                <h4 className="font-semibold truncate">{attempt.quiz.title}</h4>
+                                <h4 className="font-semibold truncate text-slate-900 dark:text-white">{attempt.quiz.title}</h4>
                                 <Badge className={cn('text-xs', difficultyColors[attempt.quiz.difficulty])}>
                                   {attempt.quiz.difficulty}
                                 </Badge>
                               </div>
-                              <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                              <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
                                 {attempt.quiz.theme && (
                                   <span className="truncate">{attempt.quiz.theme.title}</span>
                                 )}
@@ -353,13 +365,13 @@ export function HistoryPage() {
                               )}>
                                 {attempt.score}%
                               </div>
-                              <div className="text-xs text-muted-foreground">
+                              <div className="text-xs text-slate-500 dark:text-slate-400">
                                 min. {attempt.quiz.passingScore}%
                               </div>
                             </div>
 
                             {/* Stars */}
-                            <div className="flex items-center gap-1 bg-amber-100 dark:bg-amber-900/30 px-3 py-1.5 rounded-lg">
+                            <div className="flex items-center gap-1 bg-amber-50 dark:bg-amber-900/40 px-3 py-1.5 rounded-lg border border-amber-200 dark:border-amber-700/50">
                               <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
                               <span className="font-bold text-amber-700 dark:text-amber-400">
                                 +{attempt.starsEarned}

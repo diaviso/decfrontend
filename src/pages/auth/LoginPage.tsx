@@ -61,10 +61,10 @@ export function LoginPage() {
         <p className="text-muted-foreground mt-2">Plateforme d'apprentissage</p>
       </div>
 
-      <Card className="border-0 shadow-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl">
+      <Card className="border border-slate-200 dark:border-slate-700/50 shadow-2xl bg-white dark:bg-slate-900/90 backdrop-blur-xl">
         <CardHeader className="space-y-1 pb-4">
-          <CardTitle className="text-2xl font-bold">Connexion</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-2xl font-bold text-slate-900 dark:text-white">Connexion</CardTitle>
+          <CardDescription className="text-slate-600 dark:text-slate-400">
             Entrez vos identifiants pour accéder à votre compte
           </CardDescription>
         </CardHeader>
@@ -102,7 +102,7 @@ export function LoginPage() {
               <Separator className="w-full" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-white dark:bg-slate-900 px-2 text-muted-foreground">
+              <span className="bg-white dark:bg-slate-900 px-2 text-slate-500 dark:text-slate-400">
                 Ou continuer avec
               </span>
             </div>
@@ -111,7 +111,7 @@ export function LoginPage() {
           {/* Email/Password Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-slate-700 dark:text-slate-300">Email</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
@@ -128,10 +128,10 @@ export function LoginPage() {
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">Mot de passe</Label>
+                <Label htmlFor="password" className="text-slate-700 dark:text-slate-300">Mot de passe</Label>
                 <Link
                   to="/forgot-password"
-                  className="text-sm text-primary hover:underline"
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium"
                 >
                   Mot de passe oublié ?
                 </Link>
@@ -176,9 +176,9 @@ export function LoginPage() {
             </motion.div>
           </form>
 
-          <p className="text-center text-sm text-muted-foreground">
+          <p className="text-center text-sm text-slate-600 dark:text-slate-400">
             Pas encore de compte ?{' '}
-            <Link to="/register" className="text-primary font-medium hover:underline">
+            <Link to="/register" className="text-blue-600 dark:text-blue-400 font-medium hover:underline">
               S'inscrire
             </Link>
           </p>

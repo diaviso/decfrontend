@@ -8,7 +8,9 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-2xl border bg-card text-card-foreground shadow-lg transition-all duration-300 hover:shadow-xl",
+      "rounded-2xl border text-card-foreground shadow-lg transition-all duration-300 hover:shadow-xl",
+      // Apply default card background only if no bg-* class is provided
+      !className?.includes('bg-') && "bg-white dark:bg-slate-900",
       className
     )}
     {...props}

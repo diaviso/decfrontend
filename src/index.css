@@ -1,37 +1,43 @@
 @import "tailwindcss";
 
+/* Configure dark mode to use class selector */
+@variant dark (&:where(.dark, .dark *));
+
 @theme {
-  /* Base color palette */
-  --color-background: var(--bg-color);
-  --color-foreground: var(--fg-color);
-  --color-card: var(--card-color);
-  --color-card-foreground: var(--card-fg-color);
-  --color-popover: var(--popover-color);
-  --color-popover-foreground: var(--popover-fg-color);
-  --color-primary: var(--primary-color);
-  --color-primary-foreground: var(--primary-fg-color);
-  --color-secondary: var(--secondary-color);
-  --color-secondary-foreground: var(--secondary-fg-color);
-  --color-muted: var(--muted-color);
-  --color-muted-foreground: var(--muted-fg-color);
-  --color-accent: var(--accent-color);
-  --color-accent-foreground: var(--accent-fg-color);
-  --color-destructive: var(--destructive-color);
-  --color-destructive-foreground: var(--destructive-fg-color);
-  --color-success: var(--success-color);
-  --color-success-foreground: var(--success-fg-color);
-  --color-warning: var(--warning-color);
-  --color-warning-foreground: var(--warning-fg-color);
-  --color-border: var(--border-color);
-  --color-input: var(--input-color);
-  --color-ring: var(--ring-color);
+  /* Static color definitions for Tailwind v4 */
+  /* These are compile-time values - runtime theming is handled via CSS custom properties */
+
+  /* Light mode colors (default) - these get overridden by CSS custom properties at runtime */
+  --color-background: #fafafc;
+  --color-foreground: #18181b;
+  --color-card: #ffffff;
+  --color-card-foreground: #18181b;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #18181b;
+  --color-primary: #6366f1;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f4f4f5;
+  --color-secondary-foreground: #3f3f46;
+  --color-muted: #f4f4f5;
+  --color-muted-foreground: #71717a;
+  --color-accent: #eef2ff;
+  --color-accent-foreground: #4f46e5;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-success: #22c55e;
+  --color-success-foreground: #ffffff;
+  --color-warning: #f59e0b;
+  --color-warning-foreground: #ffffff;
+  --color-border: #e4e4e7;
+  --color-input: #e4e4e7;
+  --color-ring: #6366f1;
   --radius: 0.75rem;
 
   /* Sidebar colors */
-  --color-sidebar: var(--sidebar-bg-color);
-  --color-sidebar-foreground: var(--sidebar-fg-color);
-  --color-sidebar-accent: var(--sidebar-accent-color);
-  --color-sidebar-border: var(--sidebar-border-color);
+  --color-sidebar: #ffffff;
+  --color-sidebar-foreground: #52525b;
+  --color-sidebar-accent: #eef2ff;
+  --color-sidebar-border: #e4e4e7;
 }
 
 :root {
@@ -256,6 +262,94 @@ body {
     0 4px 6px rgba(0, 0, 0, 0.2),
     0 10px 20px rgba(0, 0, 0, 0.25),
     0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Card color utility class */
+.card-color {
+  background-color: #ffffff !important;
+}
+
+.dark .card-color {
+  background-color: rgba(15, 23, 42, 0.8) !important;
+}
+
+/* Force light mode card backgrounds */
+.light-card {
+  background-color: #ffffff !important;
+}
+
+.dark .light-card {
+  background-color: #18181b !important;
+}
+
+/* Override Tailwind bg-card class for proper dark mode support */
+/* In Tailwind v4, @theme values are static, so we need CSS overrides for runtime theming */
+.bg-card {
+  background-color: var(--card-color) !important;
+}
+
+.bg-background {
+  background-color: var(--bg-color) !important;
+}
+
+.bg-popover {
+  background-color: var(--popover-color) !important;
+}
+
+.bg-muted {
+  background-color: var(--muted-color) !important;
+}
+
+.bg-accent {
+  background-color: var(--accent-color) !important;
+}
+
+.bg-secondary {
+  background-color: var(--secondary-color) !important;
+}
+
+.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.text-card-foreground {
+  color: var(--card-fg-color) !important;
+}
+
+.text-foreground {
+  color: var(--fg-color) !important;
+}
+
+.text-muted-foreground {
+  color: var(--muted-fg-color) !important;
+}
+
+.text-popover-foreground {
+  color: var(--popover-fg-color) !important;
+}
+
+.text-accent-foreground {
+  color: var(--accent-fg-color) !important;
+}
+
+.text-secondary-foreground {
+  color: var(--secondary-fg-color) !important;
+}
+
+.text-primary-foreground {
+  color: var(--primary-fg-color) !important;
+}
+
+.border-border {
+  border-color: var(--border-color) !important;
+}
+
+.border-input {
+  border-color: var(--input-color) !important;
+}
+
+.ring-ring {
+  --tw-ring-color: var(--ring-color) !important;
 }
 
 .animate-float {

@@ -15,6 +15,7 @@ import {
   Trophy,
   History,
   Bot,
+  Database,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useThemeStore } from '@/store/theme';
@@ -44,6 +45,7 @@ const adminMainMenuItems = [
   { icon: FileText, label: 'Blog', path: '/blog' },
   { icon: MessageSquare, label: 'Forum', path: '/forum' },
   { icon: Users, label: 'Utilisateurs', path: '/users' },
+  { icon: Database, label: 'Base RAG', path: '/documents' },
 ];
 
 const userAccountMenuItems = [
