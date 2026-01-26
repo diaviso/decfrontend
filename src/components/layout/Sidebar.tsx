@@ -49,6 +49,7 @@ const adminMainMenuItems = [
   { icon: FolderOpen, label: 'Catégories Forum', path: '/forum/categories' },
   { icon: Users, label: 'Utilisateurs', path: '/users' },
   { icon: Database, label: 'Base RAG', path: '/documents' },
+  { icon: Crown, label: 'Abonnements', path: '/admin/subscriptions' },
 ];
 
 const userAccountMenuItems = [

@@ -33,6 +33,7 @@ import { DocumentsPage } from '@/pages/documents/DocumentsPage';
 import { PremiumPage } from '@/pages/premium/PremiumPage';
 import { PremiumSuccessPage } from '@/pages/premium/PremiumSuccessPage';
 import { PremiumCancelPage } from '@/pages/premium/PremiumCancelPage';
+import { AdminSubscriptionsPage } from '@/pages/admin/AdminSubscriptionsPage';
 import { useAuthStore } from '@/store/auth';
 import './index.css';
 
@@ -115,6 +116,7 @@ function App() {
             <Route path="/premium" element={<PremiumPage />} />
             <Route path="/premium/success" element={<PremiumSuccessPage />} />
             <Route path="/premium/cancel" element={<PremiumCancelPage />} />
+            <Route path="/admin/subscriptions" element={<AdminSubscriptionsPage />} />
           </Route>
 
           {/* Fallback */}
