@@ -49,6 +49,7 @@ const adminMainMenuItems = [
   { icon: FolderOpen, label: 'Catégories Forum', path: '/forum/categories' },
   { icon: Users, label: 'Utilisateurs', path: '/users' },
   { icon: Database, label: 'Base RAG', path: '/documents' },
+  { icon: Bot, label: 'Assistant DEC', path: '/chatbot' },
   { icon: Crown, label: 'Abonnements', path: '/admin/subscriptions' },
 ];
 
@@ -63,8 +64,18 @@ export function Sidebar() {
   const { user } = useAuthStore();
   const isAdmin = user?.role === 'ADMIN';
 
+  const isPremium = user?.isPremium || false;
+
+  // Filter user menu items based on premium status (chatbot only for premium)
+  const filteredUserMenuItems = userMainMenuItems.filter(item => {
+    if (item.path === '/chatbot') {
+      return isPremium; // Only show chatbot for premium users
+    }
+    return true;
+  });
+
   // Select menu items based on role
-  const menuItems = isAdmin ? adminMainMenuItems : userMainMenuItems;
+  const menuItems = isAdmin ? adminMainMenuItems : filteredUserMenuItems;
 
   const NavItem = ({ item, isActive }: { item: typeof menuItems[0]; isActive: boolean }) => {
     const Icon = item.icon;
@@ -78,16 +89,16 @@ export function Sidebar() {
               className={cn(
                 'flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-200',
                 isActive
-                  ? 'bg-[#1B5E3D]/10 dark:bg-[#3D9A6A]/15 text-[#1B5E3D] dark:text-[#3D9A6A]'
-                  : 'text-[#5A7265] dark:text-[#8BA898] hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26] hover:text-[#1A2E23] dark:hover:text-[#E8F0EC]'
+                  ? 'bg-white/15 text-white'
+                  : 'text-white/70 hover:bg-white/10 hover:text-white'
               )}
             >
               <div
                 className={cn(
                   'flex h-9 w-9 items-center justify-center rounded-lg transition-all',
                   isActive
-                    ? 'bg-[#1B5E3D] dark:bg-[#2D7A50] text-white shadow-md shadow-[#1B5E3D]/25'
-                    : 'bg-[#E8F0EC] dark:bg-[#1E2D26]'
+                    ? 'bg-gradient-to-r from-[#00b4db] to-[#0083b0] text-white shadow-md shadow-[#00b4db]/25'
+                    : 'bg-white/10'
                 )}
               >
                 <Icon className="h-5 w-5" />
@@ -213,15 +224,15 @@ export function Sidebar() {
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className={cn(
           'fixed left-0 top-0 z-40 h-screen overflow-hidden',
-          'bg-gradient-to-b from-white via-white to-[#F8FBF9] dark:from-[#0D1512] dark:via-[#0D1512] dark:to-[#111A16]',
-          'border-r border-[#D1DDD6] dark:border-[#2D3F35]',
-          'flex flex-col'
+          'bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364] dark:from-[#0a1628] dark:via-[#1a3a4a] dark:to-[#1e4d5c]',
+          'border-r border-[#3d5a6a]/30 dark:border-[#2d4a5a]/50',
+          'flex flex-col shadow-xl'
         )}
       >
         {/* Animated Background */}
         <FloatingParticles />
         {/* Logo */}
-        <div className="flex h-16 items-center justify-between px-4 border-b border-[#D1DDD6] dark:border-[#2D3F35]">
+        <div className="flex h-16 items-center justify-between px-4 border-b border-white/10">
           <Link to="/dashboard" className="flex items-center gap-3">
             <img 
               src="/logo.jpg" 
@@ -234,7 +245,7 @@ export function Sidebar() {
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -10 }}
-                  className="text-xl font-bold text-[#1B5E3D] dark:text-[#3D9A6A]"
+                  className="text-xl font-bold text-white"
                 >
                   DEC Learning
                 </motion.span>
@@ -253,7 +264,7 @@ export function Sidebar() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-[#5A7265] dark:text-[#8BA898]"
+                  className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-white/50"
                 >
                   Menu principal
                 </motion.p>
@@ -265,14 +276,14 @@ export function Sidebar() {
             })}
 
             {/* User Account Section */}
-            <Separator className="my-4 bg-[#D1DDD6] dark:bg-[#2D3F35]" />
+            <Separator className="my-4 bg-white/10" />
             <AnimatePresence>
               {!sidebarCollapsed && (
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-[#5A7265] dark:text-[#8BA898]"
+                  className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-white/50"
                 >
                   Mon compte
                 </motion.p>
@@ -286,12 +297,12 @@ export function Sidebar() {
         </ScrollArea>
 
         {/* Toggle Button */}
-        <div className="border-t border-[#D1DDD6] dark:border-[#2D3F35] p-3">
+        <div className="border-t border-white/10 p-3">
           <Button
             variant="ghost"
             size="icon"
             onClick={toggleSidebar}
-            className="w-full h-10 text-[#5A7265] dark:text-[#8BA898] hover:text-[#1B5E3D] dark:hover:text-[#3D9A6A] hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26]"
+            className="w-full h-10 text-white/70 hover:text-white hover:bg-white/10"
           >
             {sidebarCollapsed ? (
               <ChevronRight className="h-5 w-5" />
