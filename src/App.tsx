@@ -30,6 +30,9 @@ import { UsersPage } from '@/pages/users/UsersPage';
 import { LeaderboardPage } from '@/pages/leaderboard/LeaderboardPage';
 import { HistoryPage } from '@/pages/history/HistoryPage';
 import { DocumentsPage } from '@/pages/documents/DocumentsPage';
+import { PremiumPage } from '@/pages/premium/PremiumPage';
+import { PremiumSuccessPage } from '@/pages/premium/PremiumSuccessPage';
+import { PremiumCancelPage } from '@/pages/premium/PremiumCancelPage';
 import { useAuthStore } from '@/store/auth';
 import './index.css';
 
@@ -109,6 +112,9 @@ function App() {
             <Route path="/history" element={<HistoryPage />} />
             <Route path="/users" element={<UsersPage />} />
             <Route path="/documents" element={<DocumentsPage />} />
+            <Route path="/premium" element={<PremiumPage />} />
+            <Route path="/premium/success" element={<PremiumSuccessPage />} />
+            <Route path="/premium/cancel" element={<PremiumCancelPage />} />
           </Route>
 
           {/* Fallback */}

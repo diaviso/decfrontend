@@ -33,7 +33,7 @@ export function Header() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
   };
 
   const getInitials = () => {
@@ -48,8 +48,8 @@ export function Header() {
       transition={{ duration: 0.3, ease: 'easeInOut' }}
       className={cn(
         'fixed top-0 right-0 z-30 h-16',
-        'bg-background/80 backdrop-blur-xl',
-        'border-b border-border',
+        'bg-white/90 dark:bg-[#0D1512]/90 backdrop-blur-xl',
+        'border-b border-[#D1DDD6] dark:border-[#2D3F35]',
         'flex items-center justify-between px-6'
       )}
       style={{ width: `calc(100% - ${sidebarCollapsed ? 80 : 280}px)` }}
@@ -60,13 +60,13 @@ export function Header() {
           animate={{ width: searchFocused ? '100%' : '320px' }}
           className="relative"
         >
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5A7265] dark:text-[#8BA898]" />
           <Input
             placeholder="Rechercher..."
             className={cn(
-              'pl-10 h-10 bg-muted/50 border-border rounded-xl',
-              'focus:bg-background focus:ring-2 focus:ring-primary/20 focus:border-primary/30',
-              'transition-all placeholder:text-muted-foreground'
+              'pl-10 h-10 bg-[#E8F0EC]/50 dark:bg-[#1E2D26]/50 border-[#D1DDD6] dark:border-[#2D3F35] rounded-xl',
+              'focus:bg-white dark:focus:bg-[#141F1A] focus:ring-2 focus:ring-[#1B5E3D]/20 dark:focus:ring-[#3D9A6A]/20 focus:border-[#1B5E3D]/30 dark:focus:border-[#3D9A6A]/30',
+              'transition-all placeholder:text-[#5A7265] dark:placeholder:text-[#8BA898]'
             )}
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
@@ -81,7 +81,7 @@ export function Header() {
           variant="ghost"
           size="icon"
           onClick={toggleTheme}
-          className="relative overflow-hidden h-10 w-10 rounded-xl hover:bg-muted"
+          className="relative overflow-hidden h-10 w-10 rounded-xl hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26]"
         >
           <motion.div
             initial={false}
@@ -89,45 +89,45 @@ export function Header() {
             transition={{ duration: 0.3, type: 'spring', stiffness: 200 }}
           >
             {isDark ? (
-              <Moon className="h-5 w-5 text-primary" />
+              <Moon className="h-5 w-5 text-[#3D9A6A]" />
             ) : (
-              <Sun className="h-5 w-5 text-amber-500" />
+              <Sun className="h-5 w-5 text-[#F5A623]" />
             )}
           </motion.div>
         </Button>
 
         {/* Notifications */}
-        <Button variant="ghost" size="icon" className="relative h-10 w-10 rounded-xl hover:bg-muted">
-          <Bell className="h-5 w-5 text-muted-foreground" />
-          <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-destructive ring-2 ring-background" />
+        <Button variant="ghost" size="icon" className="relative h-10 w-10 rounded-xl hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26]">
+          <Bell className="h-5 w-5 text-[#5A7265] dark:text-[#8BA898]" />
+          <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-[#F5A623] ring-2 ring-white dark:ring-[#0D1512]" />
         </Button>
 
         {/* User Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="relative h-10 w-10 rounded-xl p-0 hover:bg-muted">
-              <Avatar className="h-9 w-9 ring-2 ring-border transition-all hover:ring-primary/40">
+            <Button variant="ghost" className="relative h-10 w-10 rounded-xl p-0 hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26]">
+              <Avatar className="h-9 w-9 ring-2 ring-[#D1DDD6] dark:ring-[#2D3F35] transition-all hover:ring-[#1B5E3D]/40 dark:hover:ring-[#3D9A6A]/40">
                 <AvatarImage src="" alt={user?.firstName} />
-                <AvatarFallback className="gradient-primary text-white font-medium text-sm">
+                <AvatarFallback className="bg-[#1B5E3D] dark:bg-[#2D7A50] text-white font-medium text-sm">
                   {getInitials()}
                 </AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-64 p-2" align="end" forceMount>
-            <DropdownMenuLabel className="font-normal p-3 bg-muted/50 rounded-lg mb-2">
+          <DropdownMenuContent className="w-64 p-2 bg-white dark:bg-[#141F1A] border-[#D1DDD6] dark:border-[#2D3F35]" align="end" forceMount>
+            <DropdownMenuLabel className="font-normal p-3 bg-[#E8F0EC]/50 dark:bg-[#1E2D26]/50 rounded-lg mb-2">
               <div className="flex flex-col space-y-1.5">
-                <p className="text-sm font-semibold leading-none text-foreground">
+                <p className="text-sm font-semibold leading-none text-[#1A2E23] dark:text-[#E8F0EC]">
                   {user?.firstName} {user?.lastName}
                 </p>
-                <p className="text-xs leading-none text-muted-foreground">
+                <p className="text-xs leading-none text-[#5A7265] dark:text-[#8BA898]">
                   {user?.email}
                 </p>
                 <span className={cn(
                   'inline-flex items-center rounded-md px-2 py-1 text-xs font-medium mt-2 w-fit',
                   user?.role === 'ADMIN'
-                    ? 'bg-primary/10 text-primary'
-                    : 'bg-accent text-accent-foreground'
+                    ? 'bg-[#F5A623]/10 text-[#F5A623]'
+                    : 'bg-[#1B5E3D]/10 dark:bg-[#3D9A6A]/20 text-[#1B5E3D] dark:text-[#3D9A6A]'
                 )}>
                   {user?.role === 'ADMIN' ? 'Administrateur' : 'Utilisateur'}
                 </span>
@@ -135,22 +135,22 @@ export function Header() {
             </DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigate('/profile')}
-              className="rounded-lg cursor-pointer py-2.5"
+              className="rounded-lg cursor-pointer py-2.5 text-[#1A2E23] dark:text-[#E8F0EC] hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26]"
             >
-              <User className="mr-3 h-4 w-4 text-muted-foreground" />
+              <User className="mr-3 h-4 w-4 text-[#5A7265] dark:text-[#8BA898]" />
               <span>Mon profil</span>
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => navigate('/settings')}
-              className="rounded-lg cursor-pointer py-2.5"
+              className="rounded-lg cursor-pointer py-2.5 text-[#1A2E23] dark:text-[#E8F0EC] hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26]"
             >
-              <Settings className="mr-3 h-4 w-4 text-muted-foreground" />
+              <Settings className="mr-3 h-4 w-4 text-[#5A7265] dark:text-[#8BA898]" />
               <span>Paramètres</span>
             </DropdownMenuItem>
-            <DropdownMenuSeparator className="my-2" />
+            <DropdownMenuSeparator className="my-2 bg-[#D1DDD6] dark:bg-[#2D3F35]" />
             <DropdownMenuItem
               onClick={handleLogout}
-              className="rounded-lg cursor-pointer py-2.5 text-destructive focus:text-destructive focus:bg-destructive/10"
+              className="rounded-lg cursor-pointer py-2.5 text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400 focus:bg-red-50 dark:focus:bg-red-900/20"
             >
               <LogOut className="mr-3 h-4 w-4" />
               <span>Déconnexion</span>

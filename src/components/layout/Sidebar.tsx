@@ -10,12 +10,13 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
-  GraduationCap,
   User,
   Trophy,
   History,
   Bot,
   Database,
+  FolderOpen,
+  Crown,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useThemeStore } from '@/store/theme';
@@ -35,6 +36,7 @@ const userMainMenuItems = [
   { icon: FileText, label: 'Blog', path: '/blog' },
   { icon: MessageSquare, label: 'Forum', path: '/forum' },
   { icon: Bot, label: 'Assistant DEC', path: '/chatbot' },
+  { icon: Crown, label: 'Premium', path: '/premium' },
 ];
 
 // Menu items for admins
@@ -44,6 +46,7 @@ const adminMainMenuItems = [
   { icon: HelpCircle, label: 'Quiz', path: '/quizzes' },
   { icon: FileText, label: 'Blog', path: '/blog' },
   { icon: MessageSquare, label: 'Forum', path: '/forum' },
+  { icon: FolderOpen, label: 'Catégories Forum', path: '/forum/categories' },
   { icon: Users, label: 'Utilisateurs', path: '/users' },
   { icon: Database, label: 'Base RAG', path: '/documents' },
 ];
@@ -74,16 +77,16 @@ export function Sidebar() {
               className={cn(
                 'flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-200',
                 isActive
-                  ? 'bg-primary/10 dark:bg-primary/15 text-primary'
-                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  ? 'bg-[#1B5E3D]/10 dark:bg-[#3D9A6A]/15 text-[#1B5E3D] dark:text-[#3D9A6A]'
+                  : 'text-[#5A7265] dark:text-[#8BA898] hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26] hover:text-[#1A2E23] dark:hover:text-[#E8F0EC]'
               )}
             >
               <div
                 className={cn(
                   'flex h-9 w-9 items-center justify-center rounded-lg transition-all',
                   isActive
-                    ? 'gradient-primary text-white shadow-md shadow-primary/25'
-                    : 'bg-muted/50 dark:bg-muted'
+                    ? 'bg-[#1B5E3D] dark:bg-[#2D7A50] text-white shadow-md shadow-[#1B5E3D]/25'
+                    : 'bg-[#E8F0EC] dark:bg-[#1E2D26]'
                 )}
               >
                 <Icon className="h-5 w-5" />
@@ -103,7 +106,7 @@ export function Sidebar() {
               {isActive && !sidebarCollapsed && (
                 <motion.div
                   layoutId="activeIndicator"
-                  className="ml-auto h-2 w-2 rounded-full gradient-primary"
+                  className="ml-auto h-2 w-2 rounded-full bg-[#F5A623]"
                 />
               )}
             </motion.div>
@@ -118,6 +121,89 @@ export function Sidebar() {
     );
   };
 
+  // Animated floating particles for sidebar background
+  const FloatingParticles = () => (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Animated gradient orbs */}
+      <motion.div
+        animate={{
+          y: [0, -20, 0],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        }}
+        className="absolute -top-20 -left-20 w-40 h-40 rounded-full bg-gradient-to-br from-[#1B5E3D]/20 to-[#3D9A6A]/10 blur-3xl"
+      />
+      <motion.div
+        animate={{
+          y: [0, 15, 0],
+          x: [0, 10, 0],
+          opacity: [0.2, 0.4, 0.2],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: 'easeInOut',
+          delay: 2,
+        }}
+        className="absolute top-1/3 -right-10 w-32 h-32 rounded-full bg-gradient-to-br from-[#F5A623]/15 to-[#F5A623]/5 blur-2xl"
+      />
+      <motion.div
+        animate={{
+          y: [0, 25, 0],
+          opacity: [0.15, 0.3, 0.15],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          ease: 'easeInOut',
+          delay: 4,
+        }}
+        className="absolute bottom-1/4 -left-10 w-36 h-36 rounded-full bg-gradient-to-br from-[#2D7A50]/20 to-[#3D9A6A]/10 blur-3xl"
+      />
+      
+      {/* Subtle animated lines */}
+      <svg className="absolute inset-0 w-full h-full opacity-[0.03] dark:opacity-[0.05]">
+        <motion.line
+          x1="0"
+          y1="20%"
+          x2="100%"
+          y2="25%"
+          stroke="#1B5E3D"
+          strokeWidth="1"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 3, repeat: Infinity, repeatType: 'reverse' }}
+        />
+        <motion.line
+          x1="0"
+          y1="60%"
+          x2="100%"
+          y2="55%"
+          stroke="#F5A623"
+          strokeWidth="1"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 4, delay: 1, repeat: Infinity, repeatType: 'reverse' }}
+        />
+        <motion.line
+          x1="0"
+          y1="85%"
+          x2="100%"
+          y2="80%"
+          stroke="#3D9A6A"
+          strokeWidth="1"
+          initial={{ pathLength: 0, opacity: 0 }}
+          animate={{ pathLength: 1, opacity: 1 }}
+          transition={{ duration: 5, delay: 2, repeat: Infinity, repeatType: 'reverse' }}
+        />
+      </svg>
+    </div>
+  );
+
   return (
     <TooltipProvider delayDuration={0}>
       <motion.aside
@@ -125,24 +211,29 @@ export function Sidebar() {
         animate={{ width: sidebarCollapsed ? 80 : 280 }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
         className={cn(
-          'fixed left-0 top-0 z-40 h-screen',
-          'bg-card border-r border-border',
+          'fixed left-0 top-0 z-40 h-screen overflow-hidden',
+          'bg-gradient-to-b from-white via-white to-[#F8FBF9] dark:from-[#0D1512] dark:via-[#0D1512] dark:to-[#111A16]',
+          'border-r border-[#D1DDD6] dark:border-[#2D3F35]',
           'flex flex-col'
         )}
       >
+        {/* Animated Background */}
+        <FloatingParticles />
         {/* Logo */}
-        <div className="flex h-16 items-center justify-between px-4 border-b border-border">
+        <div className="flex h-16 items-center justify-between px-4 border-b border-[#D1DDD6] dark:border-[#2D3F35]">
           <Link to="/dashboard" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl gradient-primary shadow-lg shadow-primary/20">
-              <GraduationCap className="h-6 w-6 text-white" />
-            </div>
+            <img 
+              src="/logo.jpg" 
+              alt="DEC Learning" 
+              className="h-10 w-10 rounded-xl shadow-lg"
+            />
             <AnimatePresence>
               {!sidebarCollapsed && (
                 <motion.span
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -10 }}
-                  className="text-xl font-bold text-foreground"
+                  className="text-xl font-bold text-[#1B5E3D] dark:text-[#3D9A6A]"
                 >
                   DEC Learning
                 </motion.span>
@@ -161,7 +252,7 @@ export function Sidebar() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+                  className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-[#5A7265] dark:text-[#8BA898]"
                 >
                   Menu principal
                 </motion.p>
@@ -173,14 +264,14 @@ export function Sidebar() {
             })}
 
             {/* User Account Section */}
-            <Separator className="my-4 bg-border" />
+            <Separator className="my-4 bg-[#D1DDD6] dark:bg-[#2D3F35]" />
             <AnimatePresence>
               {!sidebarCollapsed && (
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
-                  className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground"
+                  className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-[#5A7265] dark:text-[#8BA898]"
                 >
                   Mon compte
                 </motion.p>
@@ -194,12 +285,12 @@ export function Sidebar() {
         </ScrollArea>
 
         {/* Toggle Button */}
-        <div className="border-t border-border p-3">
+        <div className="border-t border-[#D1DDD6] dark:border-[#2D3F35] p-3">
           <Button
             variant="ghost"
             size="icon"
             onClick={toggleSidebar}
-            className="w-full h-10 text-muted-foreground hover:text-foreground hover:bg-muted"
+            className="w-full h-10 text-[#5A7265] dark:text-[#8BA898] hover:text-[#1B5E3D] dark:hover:text-[#3D9A6A] hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26]"
           >
             {sidebarCollapsed ? (
               <ChevronRight className="h-5 w-5" />

@@ -184,9 +184,9 @@ export function UsersPage() {
   };
 
   const statsData = stats ? [
-    { label: 'Total utilisateurs', value: stats.total, icon: Users, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-    { label: 'Admins', value: stats.admins, icon: Shield, color: 'text-purple-500', bg: 'bg-purple-500/10' },
-    { label: 'Vérifiés', value: stats.verified, icon: UserCheck, color: 'text-green-500', bg: 'bg-green-500/10' },
+    { label: 'Total utilisateurs', value: stats.total, icon: Users, color: 'text-[#1B5E3D] dark:text-[#3D9A6A]', bg: 'bg-[#1B5E3D]/10' },
+    { label: 'Admins', value: stats.admins, icon: Shield, color: 'text-[#F5A623]', bg: 'bg-[#F5A623]/10' },
+    { label: 'Vérifiés', value: stats.verified, icon: UserCheck, color: 'text-[#3D9A6A]', bg: 'bg-[#3D9A6A]/10' },
     { label: 'En attente', value: stats.pending, icon: UserX, color: 'text-amber-500', bg: 'bg-amber-500/10' },
   ] : [];
 
@@ -194,8 +194,8 @@ export function UsersPage() {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto" />
-          <p className="mt-4 text-muted-foreground">Chargement des utilisateurs...</p>
+          <Loader2 className="h-12 w-12 animate-spin text-[#1B5E3D] dark:text-[#3D9A6A] mx-auto" />
+          <p className="mt-4 text-[#5A7265] dark:text-[#8BA898]">Chargement des utilisateurs...</p>
         </div>
       </div>
     );
@@ -211,11 +211,11 @@ export function UsersPage() {
       {/* Header */}
       <motion.div variants={itemVariants} className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
-            <Users className="h-8 w-8 text-primary" />
+          <h1 className="text-3xl font-bold text-[#1A2E23] dark:text-[#E8F0EC] flex items-center gap-3">
+            <Users className="h-8 w-8 text-[#1B5E3D] dark:text-[#3D9A6A]" />
             Gestion des utilisateurs
           </h1>
-          <p className="text-muted-foreground mt-1">
+          <p className="text-[#5A7265] dark:text-[#8BA898] mt-1">
             Gérez les comptes utilisateurs et leurs permissions
           </p>
         </div>

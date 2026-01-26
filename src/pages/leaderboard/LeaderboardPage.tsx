@@ -90,10 +90,10 @@ export function LeaderboardPage() {
     return (
       <div className="flex flex-col items-center justify-center py-24">
         <div className="relative">
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 blur-xl opacity-30 animate-pulse" />
-          <Loader2 className="h-16 w-16 animate-spin text-primary relative" />
+          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#1B5E3D] via-[#F5A623] to-[#3D9A6A] blur-xl opacity-30 animate-pulse" />
+          <Loader2 className="h-16 w-16 animate-spin text-[#1B5E3D] dark:text-[#3D9A6A] relative" />
         </div>
-        <p className="mt-4 text-muted-foreground">Chargement du classement...</p>
+        <p className="mt-4 text-[#5A7265] dark:text-[#8BA898]">Chargement du classement...</p>
       </div>
     );
   }
@@ -107,11 +107,11 @@ export function LeaderboardPage() {
     >
       {/* Header */}
       <motion.div variants={itemVariants}>
-        <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
-          <Trophy className="h-8 w-8 text-yellow-500" />
+        <h1 className="text-3xl font-bold text-[#1A2E23] dark:text-[#E8F0EC] flex items-center gap-3">
+          <Trophy className="h-8 w-8 text-[#F5A623]" />
           Classement
         </h1>
-        <p className="text-muted-foreground mt-1">
+        <p className="text-[#5A7265] dark:text-[#8BA898] mt-1">
           Les 100 meilleurs utilisateurs par nombre d'étoiles
         </p>
       </motion.div>
@@ -119,12 +119,12 @@ export function LeaderboardPage() {
       {/* User Position Card (if not in top 100) */}
       {userPosition && !isUserInTop100 && (
         <motion.div variants={itemVariants}>
-          <Card className="border-primary/20 bg-primary/5">
+          <Card className="border-[#1B5E3D]/20 bg-[#1B5E3D]/5 dark:border-[#3D9A6A]/20 dark:bg-[#3D9A6A]/5">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <User className="h-6 w-6 text-primary" />
+                  <div className="h-12 w-12 rounded-full bg-[#1B5E3D]/10 flex items-center justify-center">
+                    <User className="h-6 w-6 text-[#1B5E3D] dark:text-[#3D9A6A]" />
                   </div>
                   <div>
                     <p className="font-semibold text-lg">
@@ -134,7 +134,7 @@ export function LeaderboardPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-3xl font-bold text-primary">
+                  <p className="text-3xl font-bold text-[#1B5E3D] dark:text-[#3D9A6A]">
                     {userPosition.rank}
                     <span className="text-base font-normal text-muted-foreground">
                       {userPosition.rank === 1 ? 'er' : 'ème'}
@@ -215,10 +215,10 @@ export function LeaderboardPage() {
 
       {/* Leaderboard Table */}
       <motion.div variants={itemVariants}>
-        <Card className="border-0 shadow-lg">
+        <Card className="border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg bg-white dark:bg-[#141F1A]">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-primary" />
+            <CardTitle className="flex items-center gap-2 text-[#1A2E23] dark:text-[#E8F0EC]">
+              <Trophy className="h-5 w-5 text-[#F5A623]" />
               Top 100
             </CardTitle>
           </CardHeader>
@@ -241,7 +241,7 @@ export function LeaderboardPage() {
                       className={cn(
                         'flex items-center gap-4 p-4 rounded-xl border-2 transition-all',
                         isCurrentUser
-                          ? 'border-primary bg-primary/5'
+                          ? 'border-[#1B5E3D] dark:border-[#3D9A6A] bg-[#1B5E3D]/5 dark:bg-[#3D9A6A]/5'
                           : getRankStyle(entry.rank)
                       )}
                     >

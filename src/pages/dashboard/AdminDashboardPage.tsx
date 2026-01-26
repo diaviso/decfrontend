@@ -97,8 +97,8 @@ export function AdminDashboardPage() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-muted-foreground">Chargement...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1B5E3D] dark:border-[#3D9A6A] mx-auto"></div>
+          <p className="mt-4 text-[#5A7265] dark:text-[#8BA898]">Chargement...</p>
         </div>
       </div>
     );
@@ -111,28 +111,28 @@ export function AdminDashboardPage() {
           value: stats.totalUsers.toString(),
           description: 'Utilisateurs inscrits',
           icon: Users,
-          color: 'from-blue-500 to-cyan-500',
+          color: 'bg-[#1B5E3D]',
         },
         {
           title: 'Quiz',
           value: stats.totalQuizzes.toString(),
           description: `${stats.totalAttempts} tentatives`,
           icon: HelpCircle,
-          color: 'from-purple-500 to-pink-500',
+          color: 'bg-[#2D7A50]',
         },
         {
           title: 'Articles',
           value: stats.totalArticles.toString(),
           description: 'Articles publiés',
           icon: FileText,
-          color: 'from-orange-500 to-red-500',
+          color: 'bg-[#F5A623]',
         },
         {
           title: 'Forum',
           value: stats.totalTopics.toString(),
           description: `${stats.totalComments} commentaires`,
           icon: MessageSquare,
-          color: 'from-green-500 to-emerald-500',
+          color: 'bg-[#3D9A6A]',
         },
       ]
     : [];
@@ -148,11 +148,11 @@ export function AdminDashboardPage() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-800 via-slate-900 to-slate-800 p-8 text-white"
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#0D3321] via-[#144832] to-[#1B5E3D] p-8 text-white"
       >
-        <div className="absolute inset-0 opacity-50" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.05)'%3E%3C/path%3E%3C/svg%3E\")" }} />
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
         <div className="relative z-10">
-          <div className="flex items-center gap-2 text-yellow-400 text-sm font-medium mb-2">
+          <div className="flex items-center gap-2 text-[#F5A623] text-sm font-medium mb-2">
             <Trophy className="h-4 w-4" />
             Panneau d'administration
           </div>
@@ -163,19 +163,19 @@ export function AdminDashboardPage() {
             Vue d'ensemble de la plateforme DEC Learning
           </p>
           <div className="mt-6 flex flex-wrap gap-4">
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2">
-              <TrendingUp className="h-5 w-5 text-green-400" />
+            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/10">
+              <TrendingUp className="h-5 w-5 text-[#F5A623]" />
               <span>{stats?.globalSuccessRate || 0}% taux de réussite global</span>
             </div>
-            <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2">
-              <Activity className="h-5 w-5 text-blue-400" />
+            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/10">
+              <Activity className="h-5 w-5 text-[#F5A623]" />
               <span>{stats?.totalAttempts || 0} tentatives de quiz</span>
             </div>
           </div>
         </div>
 
-        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/5 blur-2xl" />
-        <div className="absolute -right-20 -bottom-20 h-60 w-60 rounded-full bg-white/5 blur-3xl" />
+        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#F5A623]/20 blur-2xl" />
+        <div className="absolute -right-20 -bottom-20 h-60 w-60 rounded-full bg-[#F5A623]/10 blur-3xl" />
       </motion.div>
 
       {/* Stats Grid */}
@@ -189,27 +189,27 @@ export function AdminDashboardPage() {
           const Icon = stat.icon;
           return (
             <motion.div key={stat.title} variants={item}>
-              <Card className="relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 group">
+              <Card className="relative overflow-hidden border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg hover:shadow-xl transition-all duration-300 group bg-white dark:bg-[#141F1A]">
                 <CardContent className="p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm font-medium text-muted-foreground">
+                      <p className="text-sm font-medium text-[#5A7265] dark:text-[#8BA898]">
                         {stat.title}
                       </p>
-                      <p className="text-3xl font-bold mt-1">{stat.value}</p>
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <p className="text-3xl font-bold mt-1 text-[#1A2E23] dark:text-[#E8F0EC]">{stat.value}</p>
+                      <p className="text-xs text-[#5A7265] dark:text-[#8BA898] mt-1">
                         {stat.description}
                       </p>
                     </div>
                     <div
-                      className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${stat.color} shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                      className={`flex h-14 w-14 items-center justify-center rounded-2xl ${stat.color} shadow-lg group-hover:scale-110 transition-transform duration-300`}
                     >
                       <Icon className="h-7 w-7 text-white" />
                     </div>
                   </div>
                 </CardContent>
                 <div
-                  className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${stat.color}`}
+                  className={`absolute bottom-0 left-0 right-0 h-1 ${stat.color}`}
                 />
               </Card>
             </motion.div>
@@ -225,13 +225,13 @@ export function AdminDashboardPage() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <Card className="border-0 shadow-lg h-full">
+          <Card className="border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg h-full bg-white dark:bg-[#141F1A]">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <BarChart3 className="h-5 w-5 text-primary" />
+              <CardTitle className="flex items-center gap-2 text-[#1A2E23] dark:text-[#E8F0EC]">
+                <BarChart3 className="h-5 w-5 text-[#1B5E3D] dark:text-[#3D9A6A]" />
                 Activité des quiz (30 derniers jours)
               </CardTitle>
-              <CardDescription>Nombre de tentatives par jour</CardDescription>
+              <CardDescription className="text-[#5A7265] dark:text-[#8BA898]">Nombre de tentatives par jour</CardDescription>
             </CardHeader>
             <CardContent>
               {stats?.attemptsByDay && stats.attemptsByDay.length > 0 ? (
@@ -239,7 +239,7 @@ export function AdminDashboardPage() {
                   {stats.attemptsByDay.slice(0, 30).reverse().map((day, index) => (
                     <div
                       key={index}
-                      className="flex-1 bg-gradient-to-t from-blue-500 to-purple-500 rounded-t transition-all hover:opacity-80"
+                      className="flex-1 bg-gradient-to-t from-[#1B5E3D] to-[#3D9A6A] rounded-t transition-all hover:opacity-80"
                       style={{
                         height: `${(day.count / maxAttempts) * 100}%`,
                         minHeight: day.count > 0 ? '4px' : '0',
@@ -249,11 +249,11 @@ export function AdminDashboardPage() {
                   ))}
                 </div>
               ) : (
-                <div className="h-64 flex items-center justify-center text-muted-foreground">
+                <div className="h-64 flex items-center justify-center text-[#5A7265] dark:text-[#8BA898]">
                   <p>Aucune donnée disponible</p>
                 </div>
               )}
-              <div className="flex justify-between text-xs text-muted-foreground mt-2">
+              <div className="flex justify-between text-xs text-[#5A7265] dark:text-[#8BA898] mt-2">
                 <span>Il y a 30 jours</span>
                 <span>Aujourd'hui</span>
               </div>
@@ -267,13 +267,13 @@ export function AdminDashboardPage() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <Card className="border-0 shadow-lg h-full">
+          <Card className="border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg h-full bg-white dark:bg-[#141F1A]">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Trophy className="h-5 w-5 text-yellow-500" />
+              <CardTitle className="flex items-center gap-2 text-[#1A2E23] dark:text-[#E8F0EC]">
+                <Trophy className="h-5 w-5 text-[#F5A623]" />
                 Top utilisateurs
               </CardTitle>
-              <CardDescription>Classement par étoiles</CardDescription>
+              <CardDescription className="text-[#5A7265] dark:text-[#8BA898]">Classement par étoiles</CardDescription>
             </CardHeader>
             <CardContent>
               {stats?.topUsers && stats.topUsers.length > 0 ? (
@@ -284,27 +284,27 @@ export function AdminDashboardPage() {
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 + index * 0.1 }}
-                      className="flex items-center gap-4 p-3 rounded-xl bg-muted/50 hover:bg-muted transition-colors"
+                      className="flex items-center gap-4 p-3 rounded-xl bg-[#E8F0EC]/50 dark:bg-[#1E2D26]/50 hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26] transition-colors"
                     >
                       <div
                         className={`flex h-10 w-10 items-center justify-center rounded-xl font-bold text-white ${
                           index === 0
-                            ? 'bg-gradient-to-br from-yellow-400 to-amber-500'
+                            ? 'bg-[#F5A623]'
                             : index === 1
-                            ? 'bg-gradient-to-br from-gray-300 to-gray-400'
+                            ? 'bg-[#9CA3AF]'
                             : index === 2
-                            ? 'bg-gradient-to-br from-amber-500 to-orange-600'
-                            : 'bg-muted text-foreground'
+                            ? 'bg-[#CD7F32]'
+                            : 'bg-[#1B5E3D]/20 text-[#1B5E3D] dark:bg-[#3D9A6A]/20 dark:text-[#3D9A6A]'
                         }`}
                       >
                         {index + 1}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium truncate">
+                        <p className="font-medium truncate text-[#1A2E23] dark:text-[#E8F0EC]">
                           {topUser.firstName} {topUser.lastName}
                         </p>
                       </div>
-                      <div className="flex items-center gap-1 text-yellow-600 dark:text-yellow-400">
+                      <div className="flex items-center gap-1 text-[#F5A623]">
                         <Star className="h-4 w-4 fill-current" />
                         <span className="font-bold">{topUser.stars}</span>
                       </div>
@@ -312,7 +312,7 @@ export function AdminDashboardPage() {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-8 text-muted-foreground">
+                <div className="text-center py-8 text-[#5A7265] dark:text-[#8BA898]">
                   <Trophy className="h-12 w-12 mx-auto opacity-50 mb-4" />
                   <p>Aucun utilisateur</p>
                 </div>
@@ -328,40 +328,40 @@ export function AdminDashboardPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
       >
-        <Card className="border-0 shadow-lg">
+        <Card className="border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg bg-white dark:bg-[#141F1A]">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <UserPlus className="h-5 w-5 text-primary" />
+            <CardTitle className="flex items-center gap-2 text-[#1A2E23] dark:text-[#E8F0EC]">
+              <UserPlus className="h-5 w-5 text-[#1B5E3D] dark:text-[#3D9A6A]" />
               Nouveaux utilisateurs
             </CardTitle>
-            <CardDescription>Dernières inscriptions</CardDescription>
+            <CardDescription className="text-[#5A7265] dark:text-[#8BA898]">Dernières inscriptions</CardDescription>
           </CardHeader>
           <CardContent>
             {stats?.recentUsers && stats.recentUsers.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-border">
-                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Nom</th>
-                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Email</th>
-                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Étoiles</th>
-                      <th className="text-left py-3 px-4 font-medium text-muted-foreground">Inscription</th>
+                    <tr className="border-b border-[#D1DDD6] dark:border-[#2D3F35]">
+                      <th className="text-left py-3 px-4 font-medium text-[#5A7265] dark:text-[#8BA898]">Nom</th>
+                      <th className="text-left py-3 px-4 font-medium text-[#5A7265] dark:text-[#8BA898]">Email</th>
+                      <th className="text-left py-3 px-4 font-medium text-[#5A7265] dark:text-[#8BA898]">Étoiles</th>
+                      <th className="text-left py-3 px-4 font-medium text-[#5A7265] dark:text-[#8BA898]">Inscription</th>
                     </tr>
                   </thead>
                   <tbody>
                     {stats.recentUsers.map((recentUser) => (
-                      <tr key={recentUser.id} className="border-b border-border/50 hover:bg-muted/50">
-                        <td className="py-3 px-4 font-medium">
+                      <tr key={recentUser.id} className="border-b border-[#D1DDD6]/50 dark:border-[#2D3F35]/50 hover:bg-[#E8F0EC]/50 dark:hover:bg-[#1E2D26]/50">
+                        <td className="py-3 px-4 font-medium text-[#1A2E23] dark:text-[#E8F0EC]">
                           {recentUser.firstName} {recentUser.lastName}
                         </td>
-                        <td className="py-3 px-4 text-muted-foreground">{recentUser.email}</td>
+                        <td className="py-3 px-4 text-[#5A7265] dark:text-[#8BA898]">{recentUser.email}</td>
                         <td className="py-3 px-4">
-                          <div className="flex items-center gap-1 text-yellow-600 dark:text-yellow-400">
+                          <div className="flex items-center gap-1 text-[#F5A623]">
                             <Star className="h-4 w-4 fill-current" />
                             <span>{recentUser.stars}</span>
                           </div>
                         </td>
-                        <td className="py-3 px-4 text-muted-foreground">
+                        <td className="py-3 px-4 text-[#5A7265] dark:text-[#8BA898]">
                           {getRelativeTime(recentUser.createdAt)}
                         </td>
                       </tr>
@@ -370,7 +370,7 @@ export function AdminDashboardPage() {
                 </table>
               </div>
             ) : (
-              <div className="text-center py-8 text-muted-foreground">
+              <div className="text-center py-8 text-[#5A7265] dark:text-[#8BA898]">
                 <Users className="h-12 w-12 mx-auto opacity-50 mb-4" />
                 <p>Aucun nouvel utilisateur</p>
               </div>

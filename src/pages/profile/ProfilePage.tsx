@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import {
   User,
@@ -7,10 +7,6 @@ import {
   Shield,
   Camera,
   Save,
-  BookOpen,
-  HelpCircle,
-  Trophy,
-  TrendingUp,
   MapPin,
   Loader2,
 } from 'lucide-react';
@@ -25,18 +21,14 @@ import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
 import api from '@/lib/api';
 
-const statsData = [
-  { label: 'Themes terminés', value: 12, icon: BookOpen, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-  { label: 'Quiz réussis', value: 28, icon: HelpCircle, color: 'text-green-500', bg: 'bg-green-500/10' },
-  { label: 'Points totaux', value: 1250, icon: Trophy, color: 'text-amber-500', bg: 'bg-amber-500/10' },
-  { label: 'Progression', value: '75%', icon: TrendingUp, color: 'text-purple-500', bg: 'bg-purple-500/10' },
-];
 
 export function ProfilePage() {
   const { user, updateUser } = useAuthStore();
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
     firstName: user?.firstName || '',
     lastName: user?.lastName || '',
@@ -48,6 +40,53 @@ export function ProfilePage() {
   const getInitials = () => {
     if (!user) return 'U';
     return `${user.firstName?.[0] || ''}${user.lastName?.[0] || ''}`.toUpperCase();
+  };
+
+  const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: 'Erreur',
+        description: 'Veuillez sélectionner une image valide.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast({
+        title: 'Erreur',
+        description: 'L\'image ne doit pas dépasser 5 Mo.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setIsUploadingPhoto(true);
+    try {
+      const formData = new FormData();
+      formData.append('avatar', file);
+      const response = await api.post('/auth/profile/avatar', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+      updateUser(response.data.user);
+      toast({
+        title: 'Photo mise à jour',
+        description: 'Votre photo de profil a été modifiée avec succès.',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Erreur',
+        description: error.response?.data?.message || 'Impossible de mettre à jour la photo.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsUploadingPhoto(false);
+    }
   };
 
   const handleSave = async () => {
@@ -93,80 +132,68 @@ export function ProfilePage() {
     >
       {/* Header */}
       <motion.div variants={itemVariants}>
-        <h1 className="text-3xl font-bold text-foreground">Mon Profil</h1>
-        <p className="text-muted-foreground mt-1">
-          Gérez vos informations personnelles et suivez votre progression
+        <h1 className="text-3xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">Mon Profil</h1>
+        <p className="text-[#5A7265] dark:text-[#8BA898] mt-1">
+          Gérez vos informations personnelles
         </p>
       </motion.div>
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Profile Card */}
         <motion.div variants={itemVariants} className="lg:col-span-1">
-          <Card className="overflow-hidden">
-            <div className="h-24 gradient-primary" />
+          <Card className="overflow-hidden border border-[#D1DDD6] dark:border-[#2D3F35] bg-white dark:bg-[#141F1A]">
+            <div className="h-24 bg-gradient-to-r from-[#1B5E3D] via-[#2D7A50] to-[#3D9A6A]" />
             <CardContent className="pt-0 -mt-12 text-center">
               <div className="relative inline-block">
                 <Avatar className="h-24 w-24 ring-4 ring-background shadow-xl">
-                  <AvatarImage src="" alt={user?.firstName} />
-                  <AvatarFallback className="gradient-primary text-white text-2xl font-bold">
+                  <AvatarImage src={(user as any)?.avatar ? `http://localhost:3000${(user as any).avatar}` : ''} alt={user?.firstName} />
+                  <AvatarFallback className="bg-[#1B5E3D] text-white text-2xl font-bold">
                     {getInitials()}
                   </AvatarFallback>
                 </Avatar>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handlePhotoUpload}
+                  accept="image/*"
+                  className="hidden"
+                />
                 <Button
                   size="icon"
                   variant="secondary"
-                  className="absolute bottom-0 right-0 h-8 w-8 rounded-full shadow-lg"
+                  className="absolute bottom-0 right-0 h-8 w-8 rounded-full shadow-lg bg-[#F5A623] hover:bg-[#D4890A] text-white"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploadingPhoto}
                 >
-                  <Camera className="h-4 w-4" />
+                  {isUploadingPhoto ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Camera className="h-4 w-4" />
+                  )}
                 </Button>
               </div>
-              <h2 className="mt-4 text-xl font-semibold text-foreground">
+              <h2 className="mt-4 text-xl font-semibold text-[#1A2E23] dark:text-[#E8F0EC]">
                 {user?.firstName} {user?.lastName}
               </h2>
-              <p className="text-sm text-muted-foreground">{user?.email}</p>
+              <p className="text-sm text-[#5A7265] dark:text-[#8BA898]">{user?.email}</p>
               <span className={cn(
                 'inline-flex items-center rounded-full px-3 py-1 text-xs font-medium mt-3',
                 user?.role === 'ADMIN'
-                  ? 'bg-primary/10 text-primary'
-                  : 'bg-accent text-accent-foreground'
+                  ? 'bg-[#F5A623]/10 text-[#F5A623]'
+                  : 'bg-[#1B5E3D]/10 text-[#1B5E3D] dark:text-[#3D9A6A]'
               )}>
                 <Shield className="h-3 w-3 mr-1" />
                 {user?.role === 'ADMIN' ? 'Administrateur' : 'Utilisateur'}
               </span>
+              <p className="text-xs text-[#5A7265] dark:text-[#8BA898] mt-4">
+                Cliquez sur l'icône appareil photo pour changer votre photo
+              </p>
             </CardContent>
           </Card>
         </motion.div>
 
-        {/* Stats & Info */}
-        <motion.div variants={itemVariants} className="lg:col-span-2 space-y-6">
-          {/* Statistics */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Statistiques</CardTitle>
-              <CardDescription>Votre progression sur la plateforme</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {statsData.map((stat, index) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.1 }}
-                    className={cn(
-                      'flex flex-col items-center p-4 rounded-xl',
-                      stat.bg
-                    )}
-                  >
-                    <stat.icon className={cn('h-6 w-6 mb-2', stat.color)} />
-                    <span className="text-2xl font-bold text-foreground">{stat.value}</span>
-                    <span className="text-xs text-muted-foreground text-center">{stat.label}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
+        {/* Personal Information */}
+        <motion.div variants={itemVariants} className="lg:col-span-2">
           {/* Personal Information */}
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">

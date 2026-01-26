@@ -135,8 +135,8 @@ export function ForumCategoriesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Catégories du Forum</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-3xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">Catégories du Forum</h1>
+          <p className="text-[#5A7265] dark:text-[#8BA898] mt-1">
             Gérez les catégories pour organiser les discussions
           </p>
         </div>
@@ -160,7 +160,7 @@ export function ForumCategoriesPage() {
       {/* Categories Grid */}
       {isLoading ? (
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <Loader2 className="h-8 w-8 animate-spin text-[#1B5E3D] dark:text-[#3D9A6A]" />
         </div>
       ) : filteredCategories.length === 0 ? (
         <Card className="border-dashed">
@@ -181,12 +181,12 @@ export function ForumCategoriesPage() {
         >
           {filteredCategories.map((category) => (
             <motion.div key={category.id} variants={item}>
-              <Card className="group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+              <Card className="group relative overflow-hidden border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg hover:shadow-xl transition-all duration-300 bg-white dark:bg-[#141F1A]">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-xl bg-primary/10">
-                        <FolderOpen className="h-5 w-5 text-primary" />
+                      <div className="p-2 rounded-xl bg-[#1B5E3D]/10">
+                        <FolderOpen className="h-5 w-5 text-[#1B5E3D] dark:text-[#3D9A6A]" />
                       </div>
                       <div>
                         <CardTitle className="text-lg">{category.name}</CardTitle>

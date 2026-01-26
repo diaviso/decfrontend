@@ -118,8 +118,8 @@ export function UserDashboardPage() {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-          <p className="mt-4 text-muted-foreground">Chargement...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1B5E3D] dark:border-[#3D9A6A] mx-auto"></div>
+          <p className="mt-4 text-[#5A7265] dark:text-[#8BA898]">Chargement...</p>
         </div>
       </div>
     );
@@ -139,9 +139,9 @@ export function UserDashboardPage() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 p-8 text-white"
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#1B5E3D] via-[#144832] to-[#0D3321] p-8 text-white"
       >
-        <div className="absolute inset-0 opacity-50" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'%3E%3C/path%3E%3C/svg%3E\")" }} />
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
         <div className="relative z-10">
           <h1 className="text-3xl font-bold mb-2">
             Bonjour, {user?.firstName} ! 👋
@@ -150,23 +150,23 @@ export function UserDashboardPage() {
             Continuez votre préparation au DEC et améliorez vos compétences.
           </p>
           <div className="mt-6 flex flex-wrap gap-4">
-            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2">
-              <Star className="h-5 w-5 text-yellow-300" />
+            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/10">
+              <Star className="h-5 w-5 text-[#F5A623]" />
               <span className="font-semibold">{stats?.totalStars || 0} étoiles</span>
             </div>
-            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2">
-              <Trophy className="h-5 w-5 text-yellow-300" />
+            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/10">
+              <Trophy className="h-5 w-5 text-[#F5A623]" />
               <span>Rang #{stats?.rank || '-'}</span>
             </div>
-            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2">
-              <Target className="h-5 w-5" />
+            <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/10">
+              <Target className="h-5 w-5 text-[#F5A623]" />
               <span>{successRate}% de réussite</span>
             </div>
           </div>
         </div>
 
-        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
-        <div className="absolute -right-20 -bottom-20 h-60 w-60 rounded-full bg-white/10 blur-3xl" />
+        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#F5A623]/20 blur-2xl" />
+        <div className="absolute -right-20 -bottom-20 h-60 w-60 rounded-full bg-[#F5A623]/10 blur-3xl" />
       </motion.div>
 
       {/* Quick Stats */}
@@ -177,82 +177,82 @@ export function UserDashboardPage() {
         className="grid gap-6 md:grid-cols-2 lg:grid-cols-4"
       >
         <motion.div variants={item}>
-          <Card className="relative overflow-hidden border-0 shadow-lg">
+          <Card className="relative overflow-hidden border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg bg-white dark:bg-[#141F1A]">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Étoiles totales</p>
-                  <p className="text-3xl font-bold mt-1">{stats?.totalStars || 0}</p>
-                  <p className="text-xs text-yellow-600 dark:text-yellow-400 mt-1">
+                  <p className="text-sm font-medium text-[#5A7265] dark:text-[#8BA898]">Étoiles totales</p>
+                  <p className="text-3xl font-bold mt-1 text-[#1A2E23] dark:text-[#E8F0EC]">{stats?.totalStars || 0}</p>
+                  <p className="text-xs text-[#F5A623] mt-1">
                     Rang #{stats?.rank || '-'} / {stats?.totalUsers || '-'}
                   </p>
                 </div>
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-yellow-400 to-orange-500 shadow-lg">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F5A623] shadow-lg">
                   <Star className="h-7 w-7 text-white" />
                 </div>
               </div>
             </CardContent>
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-yellow-400 to-orange-500" />
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#F5A623]" />
           </Card>
         </motion.div>
 
         <motion.div variants={item}>
-          <Card className="relative overflow-hidden border-0 shadow-lg">
+          <Card className="relative overflow-hidden border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg bg-white dark:bg-[#141F1A]">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Quiz complétés</p>
-                  <p className="text-3xl font-bold mt-1">{stats?.quizzesCompleted || 0}</p>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-sm font-medium text-[#5A7265] dark:text-[#8BA898]">Quiz complétés</p>
+                  <p className="text-3xl font-bold mt-1 text-[#1A2E23] dark:text-[#E8F0EC]">{stats?.quizzesCompleted || 0}</p>
+                  <p className="text-xs text-[#5A7265] dark:text-[#8BA898] mt-1">
                     sur {stats?.totalQuizzes || 0} disponibles
                   </p>
                 </div>
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#1B5E3D] shadow-lg">
                   <HelpCircle className="h-7 w-7 text-white" />
                 </div>
               </div>
             </CardContent>
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 to-pink-500" />
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#1B5E3D]" />
           </Card>
         </motion.div>
 
         <motion.div variants={item}>
-          <Card className="relative overflow-hidden border-0 shadow-lg">
+          <Card className="relative overflow-hidden border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg bg-white dark:bg-[#141F1A]">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Taux de réussite</p>
-                  <p className="text-3xl font-bold mt-1">{successRate}%</p>
-                  <p className="text-xs text-green-600 dark:text-green-400 mt-1">
+                  <p className="text-sm font-medium text-[#5A7265] dark:text-[#8BA898]">Taux de réussite</p>
+                  <p className="text-3xl font-bold mt-1 text-[#1A2E23] dark:text-[#E8F0EC]">{successRate}%</p>
+                  <p className="text-xs text-[#1B5E3D] dark:text-[#3D9A6A] mt-1">
                     {stats?.quizzesPassed || 0} quiz réussis
                   </p>
                 </div>
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 shadow-lg">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#2D7A50] shadow-lg">
                   <TrendingUp className="h-7 w-7 text-white" />
                 </div>
               </div>
             </CardContent>
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-green-500 to-emerald-500" />
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#2D7A50]" />
           </Card>
         </motion.div>
 
         <motion.div variants={item}>
-          <Card className="relative overflow-hidden border-0 shadow-lg">
+          <Card className="relative overflow-hidden border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg bg-white dark:bg-[#141F1A]">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Score moyen</p>
-                  <p className="text-3xl font-bold mt-1">{stats?.averageScore || 0}%</p>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-sm font-medium text-[#5A7265] dark:text-[#8BA898]">Score moyen</p>
+                  <p className="text-3xl font-bold mt-1 text-[#1A2E23] dark:text-[#E8F0EC]">{stats?.averageScore || 0}%</p>
+                  <p className="text-xs text-[#5A7265] dark:text-[#8BA898] mt-1">
                     sur {stats?.totalAttempts || 0} tentatives
                   </p>
                 </div>
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg">
+                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#3D9A6A] shadow-lg">
                   <Award className="h-7 w-7 text-white" />
                 </div>
               </div>
             </CardContent>
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 to-cyan-500" />
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#3D9A6A]" />
           </Card>
         </motion.div>
       </motion.div>
@@ -265,39 +265,43 @@ export function UserDashboardPage() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <Card className="border-0 shadow-lg h-full">
+          <Card className="border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg h-full bg-white dark:bg-[#141F1A]">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Target className="h-5 w-5 text-primary" />
+              <CardTitle className="flex items-center gap-2 text-[#1A2E23] dark:text-[#E8F0EC]">
+                <Target className="h-5 w-5 text-[#1B5E3D] dark:text-[#3D9A6A]" />
                 Ma progression
               </CardTitle>
-              <CardDescription>Suivez votre avancement dans les quiz</CardDescription>
+              <CardDescription className="text-[#5A7265] dark:text-[#8BA898]">Suivez votre avancement dans les quiz</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm font-medium">Quiz complétés</span>
-                  <span className="text-sm text-muted-foreground">{completionRate}%</span>
+                  <span className="text-sm font-medium text-[#1A2E23] dark:text-[#E8F0EC]">Quiz complétés</span>
+                  <span className="text-sm text-[#5A7265] dark:text-[#8BA898]">{completionRate}%</span>
                 </div>
-                <Progress value={completionRate} className="h-2" />
-                <p className="text-xs text-muted-foreground mt-1">
+                <div className="h-2 rounded-full bg-[#E8F0EC] dark:bg-[#1E2D26] overflow-hidden">
+                  <div className="h-full rounded-full bg-[#1B5E3D] transition-all" style={{ width: `${completionRate}%` }} />
+                </div>
+                <p className="text-xs text-[#5A7265] dark:text-[#8BA898] mt-1">
                   {stats?.quizzesCompleted || 0} / {stats?.totalQuizzes || 0} quiz
                 </p>
               </div>
               <div>
                 <div className="flex justify-between mb-2">
-                  <span className="text-sm font-medium">Taux de réussite</span>
-                  <span className="text-sm text-muted-foreground">{successRate}%</span>
+                  <span className="text-sm font-medium text-[#1A2E23] dark:text-[#E8F0EC]">Taux de réussite</span>
+                  <span className="text-sm text-[#5A7265] dark:text-[#8BA898]">{successRate}%</span>
                 </div>
-                <Progress value={successRate} className="h-2" />
-                <p className="text-xs text-muted-foreground mt-1">
+                <div className="h-2 rounded-full bg-[#E8F0EC] dark:bg-[#1E2D26] overflow-hidden">
+                  <div className="h-full rounded-full bg-[#2D7A50] transition-all" style={{ width: `${successRate}%` }} />
+                </div>
+                <p className="text-xs text-[#5A7265] dark:text-[#8BA898] mt-1">
                   {stats?.quizzesPassed || 0} réussis sur {stats?.totalAttempts || 0} tentatives
                 </p>
               </div>
 
               <div className="pt-4">
                 <Link to="/quizzes">
-                  <Button className="w-full gap-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+                  <Button className="w-full gap-2 bg-[#1B5E3D] hover:bg-[#144832] text-white">
                     <Zap className="h-4 w-4" />
                     Continuer les quiz
                     <ChevronRight className="h-4 w-4" />
@@ -314,13 +318,13 @@ export function UserDashboardPage() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <Card className="border-0 shadow-lg h-full">
+          <Card className="border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg h-full bg-white dark:bg-[#141F1A]">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-primary" />
+              <CardTitle className="flex items-center gap-2 text-[#1A2E23] dark:text-[#E8F0EC]">
+                <Clock className="h-5 w-5 text-[#1B5E3D] dark:text-[#3D9A6A]" />
                 Activité récente
               </CardTitle>
-              <CardDescription>Vos derniers quiz</CardDescription>
+              <CardDescription className="text-[#5A7265] dark:text-[#8BA898]">Vos derniers quiz</CardDescription>
             </CardHeader>
             <CardContent>
               {recentAttempts.length > 0 ? (
@@ -331,28 +335,28 @@ export function UserDashboardPage() {
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.4 + index * 0.1 }}
-                      className="flex items-center gap-4 p-3 rounded-xl bg-muted/50 hover:bg-muted transition-colors"
+                      className="flex items-center gap-4 p-3 rounded-xl bg-[#E8F0EC]/50 dark:bg-[#1E2D26]/50 hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26] transition-colors"
                     >
                       <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${
                         attempt.passed
-                          ? 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400'
+                          ? 'bg-[#1B5E3D]/10 dark:bg-[#3D9A6A]/20 text-[#1B5E3D] dark:text-[#3D9A6A]'
                           : 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400'
                       }`}>
                         <HelpCircle className="h-5 w-5" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium truncate">{attempt.quizTitle}</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="font-medium truncate text-[#1A2E23] dark:text-[#E8F0EC]">{attempt.quizTitle}</p>
+                        <p className="text-sm text-[#5A7265] dark:text-[#8BA898]">
                           {getRelativeTime(attempt.completedAt)}
                         </p>
                       </div>
                       <div className="text-right">
                         <span className={`text-sm font-semibold ${
-                          attempt.passed ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
+                          attempt.passed ? 'text-[#1B5E3D] dark:text-[#3D9A6A]' : 'text-red-600 dark:text-red-400'
                         }`}>
                           {attempt.score}%
                         </span>
-                        <div className="flex items-center gap-1 text-xs text-yellow-600 dark:text-yellow-400">
+                        <div className="flex items-center gap-1 text-xs text-[#F5A623]">
                           <Star className="h-3 w-3 fill-current" />
                           +{attempt.starsEarned}
                         </div>
@@ -362,10 +366,10 @@ export function UserDashboardPage() {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <HelpCircle className="h-12 w-12 mx-auto text-muted-foreground/50 mb-4" />
-                  <p className="text-muted-foreground">Aucun quiz complété</p>
+                  <HelpCircle className="h-12 w-12 mx-auto text-[#5A7265]/50 dark:text-[#8BA898]/50 mb-4" />
+                  <p className="text-[#5A7265] dark:text-[#8BA898]">Aucun quiz complété</p>
                   <Link to="/quizzes">
-                    <Button variant="link" className="mt-2">
+                    <Button variant="link" className="mt-2 text-[#1B5E3D] dark:text-[#3D9A6A]">
                       Commencer un quiz
                     </Button>
                   </Link>
@@ -382,45 +386,45 @@ export function UserDashboardPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
       >
-        <h2 className="text-xl font-semibold mb-4">Accès rapide</h2>
+        <h2 className="text-xl font-semibold mb-4 text-[#1A2E23] dark:text-[#E8F0EC]">Accès rapide</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Link to="/themes">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer">
+            <Card className="border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-white dark:bg-[#141F1A]">
               <CardContent className="p-6 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 shadow-lg mx-auto mb-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#1B5E3D] shadow-lg mx-auto mb-3">
                   <BookOpen className="h-6 w-6 text-white" />
                 </div>
-                <p className="font-medium">Thèmes</p>
+                <p className="font-medium text-[#1A2E23] dark:text-[#E8F0EC]">Thèmes</p>
               </CardContent>
             </Card>
           </Link>
           <Link to="/quizzes">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer">
+            <Card className="border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-white dark:bg-[#141F1A]">
               <CardContent className="p-6 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg mx-auto mb-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#2D7A50] shadow-lg mx-auto mb-3">
                   <HelpCircle className="h-6 w-6 text-white" />
                 </div>
-                <p className="font-medium">Quiz</p>
+                <p className="font-medium text-[#1A2E23] dark:text-[#E8F0EC]">Quiz</p>
               </CardContent>
             </Card>
           </Link>
           <Link to="/leaderboard">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer">
+            <Card className="border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-white dark:bg-[#141F1A]">
               <CardContent className="p-6 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 shadow-lg mx-auto mb-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F5A623] shadow-lg mx-auto mb-3">
                   <Trophy className="h-6 w-6 text-white" />
                 </div>
-                <p className="font-medium">Classement</p>
+                <p className="font-medium text-[#1A2E23] dark:text-[#E8F0EC]">Classement</p>
               </CardContent>
             </Card>
           </Link>
           <Link to="/forum">
-            <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer">
+            <Card className="border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 cursor-pointer bg-white dark:bg-[#141F1A]">
               <CardContent className="p-6 text-center">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 shadow-lg mx-auto mb-3">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#3D9A6A] shadow-lg mx-auto mb-3">
                   <MessageSquare className="h-6 w-6 text-white" />
                 </div>
-                <p className="font-medium">Forum</p>
+                <p className="font-medium text-[#1A2E23] dark:text-[#E8F0EC]">Forum</p>
               </CardContent>
             </Card>
           </Link>

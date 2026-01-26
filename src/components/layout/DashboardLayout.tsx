@@ -8,7 +8,7 @@ export function DashboardLayout() {
   const { sidebarCollapsed } = useThemeStore();
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-[#F8FAF9] dark:bg-[#0D1512] text-[#1A2E23] dark:text-[#E8F0EC]">
       <Sidebar />
       <Header />
       <motion.main

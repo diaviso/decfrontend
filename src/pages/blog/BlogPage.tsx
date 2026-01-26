@@ -128,8 +128,8 @@ export function BlogPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Blog</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-3xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">Blog</h1>
+          <p className="text-[#5A7265] dark:text-[#8BA898] mt-1">
             Découvrez nos articles et tutoriels
           </p>
         </div>
@@ -144,7 +144,7 @@ export function BlogPage() {
             </Button>
             <Button
               onClick={() => navigate('/blog/new')}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+              className="bg-[#1B5E3D] hover:bg-[#144832] text-white"
             >
               <Plus className="mr-2 h-4 w-4" />
               Nouvel article
@@ -253,8 +253,8 @@ export function BlogPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   </div>
                 ) : (
-                  <div className="h-32 bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                    <FileText className="h-12 w-12 text-muted-foreground/50" />
+                  <div className="h-32 bg-gradient-to-br from-[#1B5E3D]/20 to-[#3D9A6A]/20 flex items-center justify-center">
+                    <FileText className="h-12 w-12 text-[#5A7265]/50" />
                   </div>
                 )}
 
@@ -262,7 +262,7 @@ export function BlogPage() {
                   <div className="flex items-start justify-between gap-2">
                     <div className="space-y-2 flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <Badge variant="outline" className="bg-primary/5 text-primary border-primary/20">
+                        <Badge variant="outline" className="bg-[#1B5E3D]/10 text-[#1B5E3D] dark:text-[#3D9A6A] border-[#1B5E3D]/20">
                           <FolderOpen className="h-3 w-3 mr-1" />
                           {article.category?.name}
                         </Badge>

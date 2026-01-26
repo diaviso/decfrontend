@@ -219,8 +219,8 @@ export function ThemesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Thèmes</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-3xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">Thèmes</h1>
+          <p className="text-[#5A7265] dark:text-[#8BA898] mt-1">
             Gérez les thèmes d'apprentissage
           </p>
         </div>
@@ -267,12 +267,12 @@ export function ThemesPage() {
         >
           {filteredThemes.map((theme) => (
             <motion.div key={theme.id} variants={item}>
-              <Card className={`group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 ${!theme.isActive ? 'opacity-60' : ''}`}>
-                <div className={`absolute top-0 left-0 right-0 h-1 ${theme.isActive ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500' : 'bg-gray-400'}`} />
+              <Card className={`group relative overflow-hidden border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg hover:shadow-xl transition-all duration-300 bg-white dark:bg-[#141F1A] ${!theme.isActive ? 'opacity-60' : ''}`}>
+                <div className={`absolute top-0 left-0 right-0 h-1 ${theme.isActive ? 'bg-gradient-to-r from-[#1B5E3D] via-[#2D7A50] to-[#3D9A6A]' : 'bg-gray-400'}`} />
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3 flex-1">
-                      <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${theme.isActive ? 'bg-gradient-to-br from-blue-500 to-purple-600' : 'bg-gray-400'} text-white font-bold text-lg`}>
+                      <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${theme.isActive ? 'bg-[#1B5E3D]' : 'bg-gray-400'} text-white font-bold text-lg`}>
                         {theme.position}
                       </div>
                       <div className="flex-1">

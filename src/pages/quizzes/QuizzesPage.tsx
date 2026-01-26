@@ -278,8 +278,8 @@ export function QuizzesPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Quiz</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-3xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">Quiz</h1>
+          <p className="text-[#5A7265] dark:text-[#8BA898] mt-1">
             Testez vos connaissances avec nos quiz interactifs
           </p>
         </div>
@@ -334,7 +334,7 @@ export function QuizzesPage() {
       {/* Quizzes Grid */}
       {isLoading ? (
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <Loader2 className="h-8 w-8 animate-spin text-[#1B5E3D] dark:text-[#3D9A6A]" />
         </div>
       ) : filteredQuizzes.length === 0 ? (
         <Card className="border-dashed">
@@ -363,9 +363,9 @@ export function QuizzesPage() {
             return (
               <motion.div key={quiz.id} variants={item}>
                 <Card className={cn(
-                  "group relative overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col",
+                  "group relative overflow-hidden border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col bg-white dark:bg-[#141F1A]",
                   isLocked && "opacity-75",
-                  hasPassed && "ring-2 ring-emerald-500/50"
+                  hasPassed && "ring-2 ring-[#3D9A6A]/50"
                 )}>
                   {/* Locked overlay */}
                   {isLocked && (
@@ -395,11 +395,11 @@ export function QuizzesPage() {
                             {quiz.difficulty}
                           </span>
                           {quiz.isFree ? (
-                            <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">
+                            <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-[#1B5E3D]/10 text-[#1B5E3D] dark:text-[#3D9A6A]">
                               Gratuit
                             </span>
                           ) : (
-                            <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400">
+                            <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-[#F5A623]/10 text-[#F5A623]">
                               Premium
                             </span>
                           )}

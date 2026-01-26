@@ -33,9 +33,9 @@ import api from '@/lib/api';
 import type { ForumTopic, ForumCategory } from '@/types';
 
 const statusConfig = {
-  OUVERT: { icon: Circle, color: 'text-green-500', bg: 'bg-green-100 dark:bg-green-900/30', label: 'Ouvert' },
+  OUVERT: { icon: Circle, color: 'text-[#3D9A6A]', bg: 'bg-[#3D9A6A]/10', label: 'Ouvert' },
   FERME: { icon: Lock, color: 'text-red-500', bg: 'bg-red-100 dark:bg-red-900/30', label: 'Fermé' },
-  RESOLU: { icon: CheckCircle, color: 'text-blue-500', bg: 'bg-blue-100 dark:bg-blue-900/30', label: 'Résolu' },
+  RESOLU: { icon: CheckCircle, color: 'text-[#F5A623]', bg: 'bg-[#F5A623]/10', label: 'Résolu' },
 };
 
 const container = {
@@ -162,8 +162,8 @@ export function ForumPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Forum</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-3xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">Forum</h1>
+          <p className="text-[#5A7265] dark:text-[#8BA898] mt-1">
             Échangez avec la communauté
           </p>
         </div>
@@ -228,7 +228,7 @@ export function ForumPage() {
       {/* Topics List */}
       {isLoading ? (
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          <Loader2 className="h-8 w-8 animate-spin text-[#1B5E3D] dark:text-[#3D9A6A]" />
         </div>
       ) : filteredTopics.length === 0 ? (
         <Card className="border-dashed">
@@ -255,7 +255,7 @@ export function ForumPage() {
             return (
               <motion.div key={topic.id} variants={item}>
                 <Card
-                  className="group border-0 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer"
+                  className="group border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer bg-white dark:bg-[#141F1A]"
                   onClick={() => navigate(`/forum/${topic.id}`)}
                 >
                   <CardContent className="p-6">
@@ -267,7 +267,7 @@ export function ForumPage() {
                         <div className="flex items-start justify-between gap-4">
                           <div>
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-primary/10 text-primary">
+                              <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-[#1B5E3D]/10 text-[#1B5E3D] dark:text-[#3D9A6A]">
                                 {topic.category?.name}
                               </span>
                               <span className={cn('px-2 py-0.5 rounded-full text-xs font-medium', status.bg, status.color)}>

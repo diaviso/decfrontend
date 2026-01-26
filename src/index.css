@@ -3,157 +3,185 @@
 /* Configure dark mode to use class selector */
 @variant dark (&:where(.dark, .dark *));
 
+/* ============================================
+   DEC LEARNING - BRAND COLOR SYSTEM
+   Primary: Forest Green (#1B5E3D)
+   Accent: Gold (#F5A623)
+   ============================================ */
+
 @theme {
   /* Static color definitions for Tailwind v4 */
-  /* These are compile-time values - runtime theming is handled via CSS custom properties */
+  /* Brand colors from logo */
+  --color-brand-green: #1B5E3D;
+  --color-brand-green-light: #2D7A50;
+  --color-brand-green-dark: #144832;
+  --color-brand-gold: #F5A623;
+  --color-brand-gold-light: #FFBE4D;
+  --color-brand-gold-dark: #D4890A;
 
-  /* Light mode colors (default) - these get overridden by CSS custom properties at runtime */
-  --color-background: #fafafc;
-  --color-foreground: #18181b;
+  /* Light mode colors */
+  --color-background: #F8FAF9;
+  --color-foreground: #1A2E23;
   --color-card: #ffffff;
-  --color-card-foreground: #18181b;
+  --color-card-foreground: #1A2E23;
   --color-popover: #ffffff;
-  --color-popover-foreground: #18181b;
-  --color-primary: #6366f1;
+  --color-popover-foreground: #1A2E23;
+  --color-primary: #1B5E3D;
   --color-primary-foreground: #ffffff;
-  --color-secondary: #f4f4f5;
-  --color-secondary-foreground: #3f3f46;
-  --color-muted: #f4f4f5;
-  --color-muted-foreground: #71717a;
-  --color-accent: #eef2ff;
-  --color-accent-foreground: #4f46e5;
-  --color-destructive: #ef4444;
+  --color-secondary: #E8F0EC;
+  --color-secondary-foreground: #1B5E3D;
+  --color-muted: #F0F4F2;
+  --color-muted-foreground: #5A7265;
+  --color-accent: #FEF7E6;
+  --color-accent-foreground: #B8780A;
+  --color-destructive: #DC2626;
   --color-destructive-foreground: #ffffff;
-  --color-success: #22c55e;
+  --color-success: #16A34A;
   --color-success-foreground: #ffffff;
-  --color-warning: #f59e0b;
-  --color-warning-foreground: #ffffff;
-  --color-border: #e4e4e7;
-  --color-input: #e4e4e7;
-  --color-ring: #6366f1;
+  --color-warning: #F5A623;
+  --color-warning-foreground: #1A2E23;
+  --color-border: #D1DDD6;
+  --color-input: #D1DDD6;
+  --color-ring: #1B5E3D;
   --radius: 0.75rem;
 
   /* Sidebar colors */
   --color-sidebar: #ffffff;
-  --color-sidebar-foreground: #52525b;
-  --color-sidebar-accent: #eef2ff;
-  --color-sidebar-border: #e4e4e7;
+  --color-sidebar-foreground: #5A7265;
+  --color-sidebar-accent: #E8F0EC;
+  --color-sidebar-border: #D1DDD6;
 }
 
 :root {
-  /* Light theme colors */
-  --bg-color: #fafafc;
-  --fg-color: #18181b;
+  /* Light theme colors - DEC Learning Brand */
+  --bg-color: #F8FAF9;
+  --fg-color: #1A2E23;
   --card-color: #ffffff;
-  --card-fg-color: #18181b;
+  --card-fg-color: #1A2E23;
   --popover-color: #ffffff;
-  --popover-fg-color: #18181b;
-  --primary-color: #6366f1;
+  --popover-fg-color: #1A2E23;
+  --primary-color: #1B5E3D;
   --primary-fg-color: #ffffff;
-  --secondary-color: #f4f4f5;
-  --secondary-fg-color: #3f3f46;
-  --muted-color: #f4f4f5;
-  --muted-fg-color: #71717a;
-  --accent-color: #eef2ff;
-  --accent-fg-color: #4f46e5;
-  --destructive-color: #ef4444;
+  --secondary-color: #E8F0EC;
+  --secondary-fg-color: #1B5E3D;
+  --muted-color: #F0F4F2;
+  --muted-fg-color: #5A7265;
+  --accent-color: #FEF7E6;
+  --accent-fg-color: #B8780A;
+  --destructive-color: #DC2626;
   --destructive-fg-color: #ffffff;
-  --success-color: #22c55e;
+  --success-color: #16A34A;
   --success-fg-color: #ffffff;
-  --warning-color: #f59e0b;
-  --warning-fg-color: #ffffff;
-  --border-color: #e4e4e7;
-  --input-color: #e4e4e7;
-  --ring-color: #6366f1;
+  --warning-color: #F5A623;
+  --warning-fg-color: #1A2E23;
+  --border-color: #D1DDD6;
+  --input-color: #D1DDD6;
+  --ring-color: #1B5E3D;
+
+  /* Brand specific */
+  --brand-green: #1B5E3D;
+  --brand-green-light: #2D7A50;
+  --brand-green-dark: #144832;
+  --brand-gold: #F5A623;
+  --brand-gold-light: #FFBE4D;
+  --brand-gold-dark: #D4890A;
 
   /* Sidebar specific - Light */
   --sidebar-bg-color: #ffffff;
-  --sidebar-fg-color: #52525b;
-  --sidebar-accent-color: #eef2ff;
-  --sidebar-border-color: #e4e4e7;
+  --sidebar-fg-color: #5A7265;
+  --sidebar-accent-color: #E8F0EC;
+  --sidebar-border-color: #D1DDD6;
 
   /* Legacy variables for compatibility */
-  --background: 240 20% 99%;
-  --foreground: 240 10% 10%;
+  --background: 150 15% 97%;
+  --foreground: 150 30% 14%;
   --card: 0 0% 100%;
-  --card-foreground: 240 10% 10%;
+  --card-foreground: 150 30% 14%;
   --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 10%;
-  --primary: 250 91% 60%;
+  --popover-foreground: 150 30% 14%;
+  --primary: 153 55% 24%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 240 10% 96%;
-  --secondary-foreground: 240 10% 20%;
-  --muted: 240 10% 96%;
-  --muted-foreground: 240 5% 50%;
-  --accent: 250 91% 97%;
-  --accent-foreground: 250 91% 45%;
+  --secondary: 150 25% 92%;
+  --secondary-foreground: 153 55% 24%;
+  --muted: 150 15% 95%;
+  --muted-foreground: 150 15% 38%;
+  --accent: 42 95% 95%;
+  --accent-foreground: 38 88% 38%;
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
-  --success: 142 71% 45%;
+  --success: 142 71% 36%;
   --success-foreground: 0 0% 100%;
-  --warning: 38 92% 50%;
-  --warning-foreground: 0 0% 100%;
-  --border: 240 10% 90%;
-  --input: 240 10% 90%;
-  --ring: 250 91% 60%;
+  --warning: 38 92% 55%;
+  --warning-foreground: 150 30% 14%;
+  --border: 150 15% 82%;
+  --input: 150 15% 82%;
+  --ring: 153 55% 24%;
 }
 
 .dark {
-  /* Dark theme colors */
-  --bg-color: #0f0f12;
-  --fg-color: #fafafa;
-  --card-color: #18181b;
-  --card-fg-color: #fafafa;
-  --popover-color: #18181b;
-  --popover-fg-color: #fafafa;
-  --primary-color: #818cf8;
-  --primary-fg-color: #0f0f12;
-  --secondary-color: #27272a;
-  --secondary-fg-color: #fafafa;
-  --muted-color: #27272a;
-  --muted-fg-color: #a1a1aa;
-  --accent-color: #312e81;
-  --accent-fg-color: #a5b4fc;
-  --destructive-color: #dc2626;
+  /* Dark theme colors - DEC Learning Brand */
+  --bg-color: #0D1512;
+  --fg-color: #E8F0EC;
+  --card-color: #141F1A;
+  --card-fg-color: #E8F0EC;
+  --popover-color: #141F1A;
+  --popover-fg-color: #E8F0EC;
+  --primary-color: #3D9A6A;
+  --primary-fg-color: #ffffff;
+  --secondary-color: #1E2D26;
+  --secondary-fg-color: #A8C4B4;
+  --muted-color: #1E2D26;
+  --muted-fg-color: #8BA898;
+  --accent-color: #2D2517;
+  --accent-fg-color: #FFBE4D;
+  --destructive-color: #EF4444;
   --destructive-fg-color: #ffffff;
-  --success-color: #16a34a;
+  --success-color: #22C55E;
   --success-fg-color: #ffffff;
-  --warning-color: #d97706;
-  --warning-fg-color: #ffffff;
-  --border-color: #27272a;
-  --input-color: #27272a;
-  --ring-color: #818cf8;
+  --warning-color: #F5A623;
+  --warning-fg-color: #0D1512;
+  --border-color: #2D3F35;
+  --input-color: #2D3F35;
+  --ring-color: #3D9A6A;
+
+  /* Brand specific - Dark mode adjusted */
+  --brand-green: #3D9A6A;
+  --brand-green-light: #4DB87D;
+  --brand-green-dark: #2D7A50;
+  --brand-gold: #FFBE4D;
+  --brand-gold-light: #FFD080;
+  --brand-gold-dark: #F5A623;
 
   /* Sidebar specific - Dark */
-  --sidebar-bg-color: #0c0c0e;
-  --sidebar-fg-color: #a1a1aa;
-  --sidebar-accent-color: #1e1b4b;
-  --sidebar-border-color: #27272a;
+  --sidebar-bg-color: #0A0F0D;
+  --sidebar-fg-color: #8BA898;
+  --sidebar-accent-color: #1E2D26;
+  --sidebar-border-color: #2D3F35;
 
   /* Legacy variables for compatibility */
-  --background: 240 10% 6%;
-  --foreground: 0 0% 95%;
-  --card: 240 10% 9%;
-  --card-foreground: 0 0% 95%;
-  --popover: 240 10% 9%;
-  --popover-foreground: 0 0% 95%;
-  --primary: 250 91% 65%;
-  --primary-foreground: 240 10% 6%;
-  --secondary: 240 10% 14%;
-  --secondary-foreground: 0 0% 95%;
-  --muted: 240 10% 14%;
-  --muted-foreground: 240 5% 60%;
-  --accent: 250 50% 18%;
-  --accent-foreground: 250 91% 75%;
-  --destructive: 0 62% 50%;
+  --background: 150 20% 6%;
+  --foreground: 150 25% 92%;
+  --card: 150 20% 10%;
+  --card-foreground: 150 25% 92%;
+  --popover: 150 20% 10%;
+  --popover-foreground: 150 25% 92%;
+  --primary: 153 45% 42%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 150 20% 15%;
+  --secondary-foreground: 150 25% 72%;
+  --muted: 150 20% 15%;
+  --muted-foreground: 150 20% 55%;
+  --accent: 38 30% 13%;
+  --accent-foreground: 38 100% 65%;
+  --destructive: 0 72% 60%;
   --destructive-foreground: 0 0% 100%;
-  --success: 142 71% 40%;
+  --success: 142 71% 45%;
   --success-foreground: 0 0% 100%;
-  --warning: 38 92% 45%;
-  --warning-foreground: 0 0% 100%;
-  --border: 240 10% 18%;
-  --input: 240 10% 18%;
-  --ring: 250 91% 65%;
+  --warning: 38 92% 55%;
+  --warning-foreground: 150 20% 6%;
+  --border: 150 18% 22%;
+  --input: 150 18% 22%;
+  --ring: 153 45% 42%;
 }
 
 * {
@@ -172,73 +200,88 @@ body {
 .glass {
   background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(27, 94, 61, 0.1);
 }
 
 .dark .glass {
-  background-color: rgba(15, 15, 23, 0.85);
-  border-color: rgba(255, 255, 255, 0.08);
+  background-color: rgba(13, 21, 18, 0.85);
+  border-color: rgba(61, 154, 106, 0.15);
 }
 
 .glass-card {
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border-radius: 1rem;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(27, 94, 61, 0.08);
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.02),
-    0 4px 8px rgba(0, 0, 0, 0.04),
-    0 16px 32px rgba(0, 0, 0, 0.06);
+    0 1px 2px rgba(27, 94, 61, 0.02),
+    0 4px 8px rgba(27, 94, 61, 0.04),
+    0 16px 32px rgba(27, 94, 61, 0.06);
 }
 
 .dark .glass-card {
-  background-color: rgba(20, 20, 30, 0.9);
-  border-color: rgba(255, 255, 255, 0.06);
+  background-color: rgba(20, 31, 26, 0.95);
+  border-color: rgba(61, 154, 106, 0.12);
   box-shadow:
-    0 1px 2px rgba(0, 0, 0, 0.1),
-    0 4px 8px rgba(0, 0, 0, 0.15),
-    0 16px 32px rgba(0, 0, 0, 0.2);
+    0 1px 2px rgba(0, 0, 0, 0.15),
+    0 4px 8px rgba(0, 0, 0, 0.2),
+    0 16px 32px rgba(0, 0, 0, 0.25);
 }
 
-/* Modern gradient system */
+/* DEC Learning Brand Gradient System */
 .gradient-primary {
-  background: linear-gradient(135deg, hsl(250 91% 60%) 0%, hsl(280 91% 55%) 100%);
+  background: linear-gradient(135deg, #1B5E3D 0%, #2D7A50 100%);
 }
 
 .gradient-secondary {
-  background: linear-gradient(135deg, hsl(200 95% 50%) 0%, hsl(250 91% 60%) 100%);
+  background: linear-gradient(135deg, #2D7A50 0%, #3D9A6A 100%);
 }
 
 .gradient-accent {
-  background: linear-gradient(135deg, hsl(280 91% 55%) 0%, hsl(320 91% 55%) 100%);
+  background: linear-gradient(135deg, #F5A623 0%, #FFBE4D 100%);
+}
+
+.gradient-brand {
+  background: linear-gradient(135deg, #1B5E3D 0%, #144832 50%, #1B5E3D 100%);
+}
+
+.gradient-gold {
+  background: linear-gradient(135deg, #D4890A 0%, #F5A623 50%, #FFBE4D 100%);
 }
 
 .gradient-success {
-  background: linear-gradient(135deg, hsl(142 71% 45%) 0%, hsl(160 71% 40%) 100%);
+  background: linear-gradient(135deg, #16A34A 0%, #22C55E 100%);
 }
 
 .gradient-warning {
-  background: linear-gradient(135deg, hsl(38 92% 50%) 0%, hsl(25 92% 50%) 100%);
+  background: linear-gradient(135deg, #F5A623 0%, #FFBE4D 100%);
 }
 
 .gradient-mesh {
   background:
-    radial-gradient(at 0% 0%, hsla(250, 91%, 60%, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(280, 91%, 55%, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, hsla(200, 95%, 50%, 0.1) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, hsla(320, 91%, 55%, 0.08) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(27, 94, 61, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(245, 166, 35, 0.12) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(45, 122, 80, 0.1) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(61, 154, 106, 0.08) 0px, transparent 50%);
 }
 
 .dark .gradient-mesh {
   background:
-    radial-gradient(at 0% 0%, hsla(250, 91%, 60%, 0.12) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(280, 91%, 55%, 0.08) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, hsla(200, 95%, 50%, 0.06) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, hsla(320, 91%, 55%, 0.05) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(61, 154, 106, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(255, 190, 77, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(45, 122, 80, 0.08) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(77, 184, 125, 0.06) 0px, transparent 50%);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, hsl(250 91% 60%) 0%, hsl(280 91% 55%) 100%);
+  background: linear-gradient(135deg, #1B5E3D 0%, #2D7A50 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, #D4890A 0%, #F5A623 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

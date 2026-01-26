@@ -31,7 +31,7 @@ const suggestedQuestions = [
   {
     category: 'Déontologie',
     icon: BookOpen,
-    color: 'bg-blue-500',
+    color: 'bg-[#1B5E3D]',
     questions: [
       "Quels sont les 5 principes fondamentaux de déontologie ?",
       "Qu'est-ce que le secret professionnel ?",
@@ -40,7 +40,7 @@ const suggestedQuestions = [
   {
     category: 'DEC',
     icon: Sparkles,
-    color: 'bg-purple-500',
+    color: 'bg-[#F5A623]',
     questions: [
       "Quelles sont les épreuves du DEC ?",
       "Comment rédiger un mémoire ?",
@@ -49,7 +49,7 @@ const suggestedQuestions = [
   {
     category: 'Application',
     icon: HelpCircle,
-    color: 'bg-emerald-500',
+    color: 'bg-[#2D7A50]',
     questions: [
       "Comment fonctionne le système de points ?",
       "Comment passer un quiz ?",
@@ -206,17 +206,17 @@ export function ChatbotPage() {
   return (
     <div className="flex flex-col h-[calc(100vh-6rem)] max-h-[calc(100vh-6rem)]">
       {/* Header - Fixed */}
-      <div className="flex-shrink-0 flex items-center justify-between pb-3 border-b mb-3">
+      <div className="flex-shrink-0 flex items-center justify-between pb-3 border-b border-[#D1DDD6] dark:border-[#2D3F35] mb-3">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center shadow-lg">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-[#1B5E3D] via-[#2D7A50] to-[#3D9A6A] flex items-center justify-center shadow-lg">
               <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
             </div>
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-background" />
+            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-[#3D9A6A] rounded-full border-2 border-background" />
           </div>
           <div>
-            <h1 className="text-lg sm:text-xl font-bold">DEC Assistant</h1>
-            <p className="text-xs sm:text-sm text-muted-foreground hidden sm:block">
+            <h1 className="text-lg sm:text-xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">DEC Assistant</h1>
+            <p className="text-xs sm:text-sm text-[#5A7265] dark:text-[#8BA898] hidden sm:block">
               Déontologie, DEC & Application
             </p>
           </div>
@@ -246,7 +246,7 @@ export function ChatbotPage() {
               <motion.div
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 mb-3 shadow-xl"
+                className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-[#1B5E3D] via-[#2D7A50] to-[#3D9A6A] mb-3 shadow-xl"
               >
                 <Sparkles className="h-8 w-8 text-white" />
               </motion.div>
@@ -303,12 +303,12 @@ export function ChatbotPage() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4 }}
-              className="mt-6 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 max-w-2xl mx-auto"
+              className="mt-6 p-3 rounded-lg bg-[#1B5E3D]/10 border border-[#1B5E3D]/20 max-w-2xl mx-auto"
             >
               <div className="flex gap-2 text-xs sm:text-sm">
-                <Info className="h-4 w-4 text-blue-500 flex-shrink-0 mt-0.5" />
-                <p className="text-muted-foreground">
-                  <span className="font-medium text-blue-600 dark:text-blue-400">Conseil :</span>{' '}
+                <Info className="h-4 w-4 text-[#1B5E3D] dark:text-[#3D9A6A] flex-shrink-0 mt-0.5" />
+                <p className="text-[#5A7265] dark:text-[#8BA898]">
+                  <span className="font-medium text-[#1B5E3D] dark:text-[#3D9A6A]">Conseil :</span>{' '}
                   Posez des questions précises pour de meilleures réponses.
                 </p>
               </div>
@@ -328,7 +328,7 @@ export function ChatbotPage() {
                   )}
                 >
                   {message.role === 'assistant' && (
-                    <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center">
+                    <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-[#1B5E3D] via-[#2D7A50] to-[#3D9A6A] flex items-center justify-center">
                       <Bot className="h-4 w-4 text-white" />
                     </div>
                   )}
@@ -367,7 +367,7 @@ export function ChatbotPage() {
                     </p>
                   </div>
                   {message.role === 'user' && (
-                    <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center">
+                    <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#F5A623] flex items-center justify-center">
                       <User className="h-4 w-4 text-white" />
                     </div>
                   )}
@@ -381,7 +381,7 @@ export function ChatbotPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="flex gap-2 sm:gap-3"
               >
-                <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex items-center justify-center">
+                <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-[#1B5E3D] via-[#2D7A50] to-[#3D9A6A] flex items-center justify-center">
                   <Bot className="h-4 w-4 text-white" />
                 </div>
                 <div className="bg-muted rounded-2xl rounded-bl-sm px-4 py-3">
@@ -413,7 +413,7 @@ export function ChatbotPage() {
             onClick={handleSend}
             disabled={!input.trim() || isLoading}
             size="icon"
-            className="h-[44px] w-[44px] rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 hover:opacity-90"
+            className="h-[44px] w-[44px] rounded-xl bg-[#1B5E3D] hover:bg-[#144832]"
           >
             {isLoading ? (
               <Loader2 className="h-5 w-5 animate-spin" />

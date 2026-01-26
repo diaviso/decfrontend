@@ -294,11 +294,11 @@ export function DocumentsPage() {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 p-8 text-white"
+        className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#1B5E3D] via-[#144832] to-[#0D3321] p-8 text-white"
       >
-        <div className="absolute inset-0 opacity-50" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.05)'%3E%3C/path%3E%3C/svg%3E\")" }} />
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
         <div className="relative z-10">
-          <div className="flex items-center gap-2 text-white/80 text-sm font-medium mb-2">
+          <div className="flex items-center gap-2 text-[#F5A623] text-sm font-medium mb-2">
             <Database className="h-4 w-4" />
             Base de connaissances RAG
           </div>
@@ -311,27 +311,27 @@ export function DocumentsPage() {
           <div className="mt-6 flex flex-wrap gap-4">
             {stats && (
               <>
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2">
-                  <FileText className="h-5 w-5" />
+                <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/10">
+                  <FileText className="h-5 w-5 text-[#F5A623]" />
                   <span>{stats.totalDocuments} documents</span>
                 </div>
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2">
-                  <CheckCircle className="h-5 w-5 text-green-300" />
+                <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/10">
+                  <CheckCircle className="h-5 w-5 text-[#F5A623]" />
                   <span>{stats.processedDocuments} traités</span>
                 </div>
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2">
-                  <Database className="h-5 w-5" />
+                <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/10">
+                  <Database className="h-5 w-5 text-[#F5A623]" />
                   <span>{stats.totalChunks} chunks</span>
                 </div>
-                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2">
+                <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/10">
                   <span>{stats.totalSizeMB} MB total</span>
                 </div>
               </>
             )}
           </div>
         </div>
-        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/5 blur-2xl" />
-        <div className="absolute -right-20 -bottom-20 h-60 w-60 rounded-full bg-white/5 blur-3xl" />
+        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#F5A623]/20 blur-2xl" />
+        <div className="absolute -right-20 -bottom-20 h-60 w-60 rounded-full bg-[#F5A623]/10 blur-3xl" />
       </motion.div>
 
       {/* Actions */}

@@ -149,10 +149,10 @@ export function HistoryPage() {
     return (
       <div className="flex flex-col items-center justify-center py-24">
         <div className="relative">
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 blur-xl opacity-30 animate-pulse" />
-          <Loader2 className="h-16 w-16 animate-spin text-primary relative" />
+          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-[#1B5E3D] via-[#F5A623] to-[#3D9A6A] blur-xl opacity-30 animate-pulse" />
+          <Loader2 className="h-16 w-16 animate-spin text-[#1B5E3D] dark:text-[#3D9A6A] relative" />
         </div>
-        <p className="mt-4 text-muted-foreground">Chargement de l'historique...</p>
+        <p className="mt-4 text-[#5A7265] dark:text-[#8BA898]">Chargement de l'historique...</p>
       </div>
     );
   }
@@ -162,13 +162,13 @@ export function HistoryPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg">
+          <h1 className="text-3xl font-bold text-[#1A2E23] dark:text-[#E8F0EC] flex items-center gap-3">
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1B5E3D] text-white shadow-lg">
               <History className="h-6 w-6" />
             </div>
             Historique des Quiz
           </h1>
-          <p className="text-muted-foreground mt-1">
+          <p className="text-[#5A7265] dark:text-[#8BA898] mt-1">
             Consultez toutes vos tentatives de quiz
           </p>
         </div>
@@ -183,25 +183,25 @@ export function HistoryPage() {
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
         >
           <motion.div variants={item}>
-            <Card className="border border-blue-200 dark:border-blue-800/50 shadow-lg bg-white dark:bg-slate-900/80">
+            <Card className="border border-[#1B5E3D]/20 dark:border-[#3D9A6A]/30 shadow-lg bg-white dark:bg-[#141F1A]">
               <CardContent className="pt-6 text-center">
-                <div className="w-12 h-12 mx-auto rounded-xl bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center mb-3">
-                  <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                <div className="w-12 h-12 mx-auto rounded-xl bg-[#1B5E3D]/10 flex items-center justify-center mb-3">
+                  <BarChart3 className="h-6 w-6 text-[#1B5E3D] dark:text-[#3D9A6A]" />
                 </div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.totalAttempts}</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Tentatives</p>
+                <p className="text-2xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">{stats.totalAttempts}</p>
+                <p className="text-xs text-[#5A7265] dark:text-[#8BA898] font-medium">Tentatives</p>
               </CardContent>
             </Card>
           </motion.div>
 
           <motion.div variants={item}>
-            <Card className="border border-emerald-200 dark:border-emerald-800/50 shadow-lg bg-white dark:bg-slate-900/80">
+            <Card className="border border-[#3D9A6A]/20 dark:border-[#3D9A6A]/30 shadow-lg bg-white dark:bg-[#141F1A]">
               <CardContent className="pt-6 text-center">
-                <div className="w-12 h-12 mx-auto rounded-xl bg-emerald-100 dark:bg-emerald-900/50 flex items-center justify-center mb-3">
-                  <CheckCircle className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                <div className="w-12 h-12 mx-auto rounded-xl bg-[#3D9A6A]/10 flex items-center justify-center mb-3">
+                  <CheckCircle className="h-6 w-6 text-[#3D9A6A]" />
                 </div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.passedAttempts}</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Réussites</p>
+                <p className="text-2xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">{stats.passedAttempts}</p>
+                <p className="text-xs text-[#5A7265] dark:text-[#8BA898] font-medium">Réussites</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -219,37 +219,37 @@ export function HistoryPage() {
           </motion.div>
 
           <motion.div variants={item}>
-            <Card className="border border-amber-200 dark:border-amber-800/50 shadow-lg bg-white dark:bg-slate-900/80">
+            <Card className="border border-[#F5A623]/20 dark:border-[#F5A623]/30 shadow-lg bg-white dark:bg-[#141F1A]">
               <CardContent className="pt-6 text-center">
-                <div className="w-12 h-12 mx-auto rounded-xl bg-amber-100 dark:bg-amber-900/50 flex items-center justify-center mb-3">
-                  <Star className="h-6 w-6 text-amber-600 dark:text-amber-400 fill-amber-500" />
+                <div className="w-12 h-12 mx-auto rounded-xl bg-[#F5A623]/10 flex items-center justify-center mb-3">
+                  <Star className="h-6 w-6 text-[#F5A623] fill-[#F5A623]" />
                 </div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.totalStars}</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Étoiles gagnées</p>
+                <p className="text-2xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">{stats.totalStars}</p>
+                <p className="text-xs text-[#5A7265] dark:text-[#8BA898] font-medium">Étoiles gagnées</p>
               </CardContent>
             </Card>
           </motion.div>
 
           <motion.div variants={item}>
-            <Card className="border border-purple-200 dark:border-purple-800/50 shadow-lg bg-white dark:bg-slate-900/80">
+            <Card className="border border-[#2D7A50]/20 dark:border-[#2D7A50]/30 shadow-lg bg-white dark:bg-[#141F1A]">
               <CardContent className="pt-6 text-center">
-                <div className="w-12 h-12 mx-auto rounded-xl bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center mb-3">
-                  <Target className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                <div className="w-12 h-12 mx-auto rounded-xl bg-[#2D7A50]/10 flex items-center justify-center mb-3">
+                  <Target className="h-6 w-6 text-[#2D7A50]" />
                 </div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.averageScore}%</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Score moyen</p>
+                <p className="text-2xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">{stats.averageScore}%</p>
+                <p className="text-xs text-[#5A7265] dark:text-[#8BA898] font-medium">Score moyen</p>
               </CardContent>
             </Card>
           </motion.div>
 
           <motion.div variants={item}>
-            <Card className="border border-cyan-200 dark:border-cyan-800/50 shadow-lg bg-white dark:bg-slate-900/80">
+            <Card className="border border-[#1B5E3D]/20 dark:border-[#3D9A6A]/30 shadow-lg bg-white dark:bg-[#141F1A]">
               <CardContent className="pt-6 text-center">
-                <div className="w-12 h-12 mx-auto rounded-xl bg-cyan-100 dark:bg-cyan-900/50 flex items-center justify-center mb-3">
-                  <TrendingUp className="h-6 w-6 text-cyan-600 dark:text-cyan-400" />
+                <div className="w-12 h-12 mx-auto rounded-xl bg-[#1B5E3D]/10 flex items-center justify-center mb-3">
+                  <TrendingUp className="h-6 w-6 text-[#1B5E3D] dark:text-[#3D9A6A]" />
                 </div>
-                <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.bestScore}%</p>
-                <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">Meilleur score</p>
+                <p className="text-2xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">{stats.bestScore}%</p>
+                <p className="text-xs text-[#5A7265] dark:text-[#8BA898] font-medium">Meilleur score</p>
               </CardContent>
             </Card>
           </motion.div>
@@ -259,7 +259,7 @@ export function HistoryPage() {
       {/* Filter and List */}
       <Card className="border border-slate-200 dark:border-slate-700/50 shadow-lg bg-white dark:bg-slate-900/80">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <CardTitle className="text-xl font-semibold text-slate-900 text-blue-500">Toutes les tentatives</CardTitle>
+          <CardTitle className="text-xl font-semibold text-[#1A2E23] dark:text-[#E8F0EC]">Toutes les tentatives</CardTitle>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="gap-2">
@@ -296,7 +296,7 @@ export function HistoryPage() {
                     : "Vous n'avez pas encore échoué de quiz. Bravo !"}
               </p>
               <Link to="/quizzes">
-                <Button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+                <Button className="bg-[#1B5E3D] hover:bg-[#144832] text-white">
                   Découvrir les quiz
                 </Button>
               </Link>
