@@ -12,7 +12,9 @@ export interface User {
   showInLeaderboard: boolean;
   isPremium: boolean;
   premiumExpiresAt?: string;
+  autoRenew: boolean;
   stripeCustomerId?: string;
+  stripeSubscriptionId?: string;
   createdAt: string;
   updatedAt: string;
 }

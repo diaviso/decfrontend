@@ -9,6 +9,9 @@ import {
   Save,
   MapPin,
   Loader2,
+  Crown,
+  RefreshCw,
+  XCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/store/auth';
@@ -28,6 +31,8 @@ export function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+  const [isTogglingAutoRenew, setIsTogglingAutoRenew] = useState(false);
+  const [isCancelling, setIsCancelling] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({
     firstName: user?.firstName || '',
@@ -107,6 +112,54 @@ export function ProfilePage() {
       });
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleToggleAutoRenew = async () => {
+    if (!user) return;
+    setIsTogglingAutoRenew(true);
+    try {
+      const newAutoRenew = !user.autoRenew;
+      const response = await api.post('/stripe/toggle-auto-renew', { autoRenew: newAutoRenew });
+      updateUser({ ...user, autoRenew: newAutoRenew });
+      toast({
+        title: response.data.message,
+        description: newAutoRenew 
+          ? 'Votre abonnement sera renouvelé automatiquement.'
+          : 'Vous devrez renouveler manuellement votre abonnement.',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Erreur',
+        description: error.response?.data?.message || 'Une erreur est survenue.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsTogglingAutoRenew(false);
+    }
+  };
+
+  const handleCancelSubscription = async () => {
+    if (!user) return;
+    if (!confirm('Êtes-vous sûr de vouloir annuler votre abonnement ? Vous conserverez l\'accès premium jusqu\'à la fin de la période en cours.')) {
+      return;
+    }
+    setIsCancelling(true);
+    try {
+      const response = await api.post('/stripe/cancel-subscription');
+      updateUser({ ...user, autoRenew: false });
+      toast({
+        title: 'Abonnement annulé',
+        description: response.data.message,
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Erreur',
+        description: error.response?.data?.message || 'Une erreur est survenue.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsCancelling(false);
     }
   };
 
@@ -317,6 +370,97 @@ export function ProfilePage() {
           </Card>
         </motion.div>
       </div>
+
+      {/* Subscription Management Card - Only show for premium users */}
+      {user?.isPremium && (
+        <motion.div variants={itemVariants}>
+          <Card className="border border-[#D1DDD6] dark:border-[#2D3F35] bg-white dark:bg-[#141F1A]">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-[#1A2E23] dark:text-[#E8F0EC]">
+                <Crown className="h-5 w-5 text-amber-500" />
+                Gestion de l'abonnement Premium
+              </CardTitle>
+              <CardDescription>
+                Gérez votre abonnement et vos préférences de renouvellement
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {/* Subscription Status */}
+              <div className="flex items-center justify-between p-4 rounded-lg bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 border border-amber-200 dark:border-amber-800">
+                <div>
+                  <p className="font-medium text-amber-800 dark:text-amber-200">Statut : Actif</p>
+                  <p className="text-sm text-amber-600 dark:text-amber-400">
+                    {user.premiumExpiresAt 
+                      ? `Expire le ${new Date(user.premiumExpiresAt).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}`
+                      : 'Abonnement actif'}
+                  </p>
+                </div>
+                <Crown className="h-8 w-8 text-amber-500" />
+              </div>
+
+              {/* Auto-renewal toggle */}
+              <div className="flex items-center justify-between p-4 rounded-lg border border-[#D1DDD6] dark:border-[#2D3F35]">
+                <div className="flex items-center gap-3">
+                  <RefreshCw className={cn("h-5 w-5", user.autoRenew ? "text-green-500" : "text-gray-400")} />
+                  <div>
+                    <p className="font-medium text-[#1A2E23] dark:text-[#E8F0EC]">Renouvellement automatique</p>
+                    <p className="text-sm text-[#5A7265] dark:text-[#8BA898]">
+                      {user.autoRenew 
+                        ? 'Votre abonnement sera renouvelé automatiquement (1€/mois)'
+                        : 'Vous devrez renouveler manuellement votre abonnement'}
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant={user.autoRenew ? "outline" : "default"}
+                  size="sm"
+                  onClick={handleToggleAutoRenew}
+                  disabled={isTogglingAutoRenew}
+                  className={user.autoRenew ? "" : "bg-[#1B5E3D] hover:bg-[#144832]"}
+                >
+                  {isTogglingAutoRenew ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : user.autoRenew ? (
+                    'Désactiver'
+                  ) : (
+                    'Activer'
+                  )}
+                </Button>
+              </div>
+
+              {/* Cancel subscription */}
+              <div className="flex items-center justify-between p-4 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/10">
+                <div className="flex items-center gap-3">
+                  <XCircle className="h-5 w-5 text-red-500" />
+                  <div>
+                    <p className="font-medium text-red-800 dark:text-red-200">Annuler l'abonnement</p>
+                    <p className="text-sm text-red-600 dark:text-red-400">
+                      Vous conserverez l'accès jusqu'à la fin de la période en cours
+                    </p>
+                  </div>
+                </div>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={handleCancelSubscription}
+                  disabled={isCancelling}
+                >
+                  {isCancelling ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    'Annuler'
+                  )}
+                </Button>
+              </div>
+
+              {/* Price info */}
+              <p className="text-center text-sm text-[#5A7265] dark:text-[#8BA898]">
+                Abonnement mensuel : <span className="font-semibold text-[#1B5E3D]">1€/mois</span>
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
+      )}
     </motion.div>
   );
 }
