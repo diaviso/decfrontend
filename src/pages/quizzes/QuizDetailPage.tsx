@@ -523,6 +523,22 @@ export function QuizDetailPage() {
       });
       return;
     }
+    // Check premium access for non-free quizzes
+    if (!quiz.isFree) {
+      const userAny = user as any;
+      const isPremiumValid = userAny?.isPremium && 
+        (!userAny?.premiumExpiresAt || new Date(userAny.premiumExpiresAt) > new Date());
+      
+      if (!isPremiumValid) {
+        toast({
+          title: 'Quiz Premium',
+          description: 'Ce quiz est réservé aux membres Premium. Souscrivez à un abonnement pour y accéder.',
+          variant: 'destructive',
+        });
+        navigate('/premium');
+        return;
+      }
+    }
     if (attemptInfo && attemptInfo.remainingAttempts <= 0) {
       toast({
         title: 'Tentatives épuisées',

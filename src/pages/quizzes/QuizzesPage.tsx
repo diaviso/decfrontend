@@ -19,6 +19,7 @@ import {
   CheckCircle,
   XCircle,
   RotateCcw,
+  Crown,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -359,16 +360,39 @@ export function QuizzesPage() {
             const hasPassed = status?.hasPassed;
             const isCompleted = status?.isCompleted;
             const canPurchase = status?.canPurchaseAttempt;
+            
+            // Check if user needs premium access for this quiz
+            const isPremiumValid = user?.isPremium && 
+              (!user?.premiumExpiresAt || new Date(user.premiumExpiresAt) > new Date());
+            const needsPremium = !quiz.isFree && !isPremiumValid && !isAdmin;
 
             return (
               <motion.div key={quiz.id} variants={item}>
                 <Card className={cn(
                   "group relative overflow-hidden border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg hover:shadow-xl transition-all duration-300 h-full flex flex-col bg-white dark:bg-[#141F1A]",
-                  isLocked && "opacity-75",
+                  (isLocked || needsPremium) && "opacity-75",
                   hasPassed && "ring-2 ring-[#3D9A6A]/50"
                 )}>
-                  {/* Locked overlay */}
-                  {isLocked && (
+                  {/* Premium locked overlay */}
+                  {needsPremium && !isLocked && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#F5A623]/90 to-[#D4890A]/90 z-10 flex flex-col items-center justify-center backdrop-blur-sm">
+                      <Crown className="h-10 w-10 text-white mb-2" />
+                      <p className="text-white font-medium">Quiz Premium</p>
+                      <p className="text-white/80 text-sm mt-1 text-center px-4">
+                        Souscrivez à un abonnement pour accéder à ce quiz
+                      </p>
+                      <Button 
+                        className="mt-4 bg-white text-[#F5A623] hover:bg-white/90"
+                        onClick={() => navigate('/premium')}
+                      >
+                        <Crown className="mr-2 h-4 w-4" />
+                        Devenir Premium
+                      </Button>
+                    </div>
+                  )}
+                  
+                  {/* Star locked overlay */}
+                  {isLocked && !needsPremium && (
                     <div className="absolute inset-0 bg-slate-900/60 dark:bg-slate-900/80 z-10 flex flex-col items-center justify-center backdrop-blur-sm">
                       <Lock className="h-10 w-10 text-amber-400 mb-2" />
                       <p className="text-white font-medium">Quiz verrouillé</p>

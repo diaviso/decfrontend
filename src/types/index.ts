@@ -5,10 +5,14 @@ export interface User {
   lastName: string;
   country?: string;
   city?: string;
+  avatar?: string;
   role: 'ADMIN' | 'USER';
   isVerified: boolean;
   stars: number;
   showInLeaderboard: boolean;
+  isPremium: boolean;
+  premiumExpiresAt?: string;
+  stripeCustomerId?: string;
   createdAt: string;
   updatedAt: string;
 }
