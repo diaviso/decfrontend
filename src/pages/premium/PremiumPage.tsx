@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { loadStripe } from '@stripe/stripe-js';
 import {
   Crown,
   Check,
@@ -17,8 +16,6 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { useAuthStore } from '@/store/auth';
 import api from '@/lib/api';
-
-const stripePromise = loadStripe('pk_test_51StYtQBERrtf4ZWpK0qQ0wthzHSX7vDsQ9Z5ZwzkGrwEuNunYvWookV3lUdfkkX88EzBTtDrBWZWngCkrcFmXO1u00HPBL9tRw');
 
 const features = [
   {
@@ -44,7 +41,7 @@ const features = [
 ];
 
 export function PremiumPage() {
-  const { user, updateUser } = useAuthStore();
+  const { user } = useAuthStore();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const isPremium = (user as any)?.isPremium;
