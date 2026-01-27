@@ -4,8 +4,10 @@ import { persist } from 'zustand/middleware';
 interface ThemeState {
   isDark: boolean;
   sidebarCollapsed: boolean;
+  mobileSidebarOpen: boolean;
   toggleTheme: () => void;
   toggleSidebar: () => void;
+  setMobileSidebarOpen: (open: boolean) => void;
   setTheme: (isDark: boolean) => void;
 }
 
@@ -43,6 +45,7 @@ export const useThemeStore = create<ThemeState>()(
     (set) => ({
       isDark: initialIsDark,
       sidebarCollapsed: false,
+      mobileSidebarOpen: false,
       toggleTheme: () => set((state) => {
         const newIsDark = !state.isDark;
         applyTheme(newIsDark);
@@ -53,6 +56,7 @@ export const useThemeStore = create<ThemeState>()(
         return { isDark };
       }),
       toggleSidebar: () => set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
+      setMobileSidebarOpen: (open: boolean) => set(() => ({ mobileSidebarOpen: open })),
     }),
     {
       name: 'theme-storage',

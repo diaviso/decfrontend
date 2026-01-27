@@ -162,13 +162,14 @@ export function HistoryPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-[#1A2E23] dark:text-[#E8F0EC] flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1B5E3D] text-white shadow-lg">
-              <History className="h-6 w-6" />
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#1A2E23] dark:text-[#E8F0EC] flex items-center gap-2 sm:gap-3">
+            <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-[#1B5E3D] text-white shadow-lg">
+              <History className="h-5 w-5 sm:h-6 sm:w-6" />
             </div>
-            Historique des Quiz
+            <span className="hidden sm:inline">Historique des Quiz</span>
+            <span className="sm:hidden">Historique</span>
           </h1>
-          <p className="text-[#5A7265] dark:text-[#8BA898] mt-1">
+          <p className="text-sm sm:text-base text-[#5A7265] dark:text-[#8BA898] mt-1">
             Consultez toutes vos tentatives de quiz
           </p>
         </div>
@@ -356,30 +357,30 @@ export function HistoryPage() {
                             </div>
                           </div>
 
-                          <div className="flex items-center gap-6 shrink-0">
+                          <div className="flex items-center gap-2 sm:gap-6 shrink-0">
                             {/* Score */}
                             <div className="text-center">
                               <div className={cn(
-                                'text-2xl font-bold',
+                                'text-lg sm:text-2xl font-bold',
                                 passed ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'
                               )}>
                                 {attempt.score}%
                               </div>
-                              <div className="text-xs text-slate-500 dark:text-slate-400">
+                              <div className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 hidden sm:block">
                                 min. {attempt.quiz.passingScore}%
                               </div>
                             </div>
 
                             {/* Stars */}
-                            <div className="flex items-center gap-1 bg-amber-50 dark:bg-amber-900/40 px-3 py-1.5 rounded-lg border border-amber-200 dark:border-amber-700/50">
-                              <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
-                              <span className="font-bold text-amber-700 dark:text-amber-400">
+                            <div className="flex items-center gap-1 bg-amber-50 dark:bg-amber-900/40 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg border border-amber-200 dark:border-amber-700/50">
+                              <Star className="h-3 w-3 sm:h-4 sm:w-4 text-amber-500 fill-amber-500" />
+                              <span className="font-bold text-amber-700 dark:text-amber-400 text-sm sm:text-base">
                                 +{attempt.starsEarned}
                               </span>
                             </div>
 
                             {/* Progress bar mini */}
-                            <div className="w-20 hidden sm:block">
+                            <div className="w-20 hidden md:block">
                               <Progress
                                 value={attempt.score}
                                 className={cn(

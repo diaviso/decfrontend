@@ -17,6 +17,7 @@ import {
   Database,
   FolderOpen,
   Crown,
+  X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useThemeStore } from '@/store/theme';
@@ -60,7 +61,7 @@ const userAccountMenuItems = [
 
 export function Sidebar() {
   const location = useLocation();
-  const { sidebarCollapsed, toggleSidebar } = useThemeStore();
+  const { sidebarCollapsed, toggleSidebar, mobileSidebarOpen, setMobileSidebarOpen } = useThemeStore();
   const { user } = useAuthStore();
   const isAdmin = user?.role === 'ADMIN';
 
@@ -216,8 +217,11 @@ export function Sidebar() {
     </div>
   );
 
+  const closeMobileSidebar = () => setMobileSidebarOpen(false);
+
   return (
     <TooltipProvider delayDuration={0}>
+      {/* Desktop Sidebar */}
       <motion.aside
         initial={false}
         animate={{ width: sidebarCollapsed ? 80 : 280 }}
@@ -226,7 +230,8 @@ export function Sidebar() {
           'fixed left-0 top-0 z-40 h-screen overflow-hidden',
           'bg-white dark:bg-[#0D1512]',
           'border-r border-[#D1DDD6] dark:border-[#2D3F35]',
-          'flex flex-col'
+          'flex-col',
+          'hidden lg:flex'
         )}
       >
         {/* Animated Background */}
@@ -312,6 +317,127 @@ export function Sidebar() {
           </Button>
         </div>
       </motion.aside>
+
+      {/* Mobile Sidebar */}
+      <AnimatePresence>
+        {mobileSidebarOpen && (
+          <motion.aside
+            initial={{ x: -280 }}
+            animate={{ x: 0 }}
+            exit={{ x: -280 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className={cn(
+              'fixed left-0 top-0 z-50 h-screen w-[280px] overflow-hidden',
+              'bg-white dark:bg-[#0D1512]',
+              'border-r border-[#D1DDD6] dark:border-[#2D3F35]',
+              'flex flex-col',
+              'lg:hidden'
+            )}
+          >
+            {/* Animated Background */}
+            <FloatingParticles />
+            {/* Logo with close button */}
+            <div className="flex h-16 items-center justify-between px-4 border-b border-[#D1DDD6] dark:border-[#2D3F35]">
+              <Link to="/dashboard" className="flex items-center gap-3" onClick={closeMobileSidebar}>
+                <img 
+                  src="/logo.jpg" 
+                  alt="DEC Learning" 
+                  className="h-10 w-10 rounded-xl shadow-lg"
+                />
+                <span className="text-xl font-bold text-[#1B5E3D] dark:text-[#3D9A6A]">
+                  DEC Learning
+                </span>
+              </Link>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={closeMobileSidebar}
+                className="h-10 w-10 text-[#5A7265] dark:text-[#8BA898] hover:text-[#1B5E3D] dark:hover:text-[#3D9A6A] hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26]"
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </div>
+
+            {/* Navigation */}
+            <ScrollArea className="flex-1 px-3 py-4">
+              <nav className="space-y-1">
+                {/* Main Menu */}
+                <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-[#5A7265] dark:text-[#8BA898]">
+                  Menu principal
+                </p>
+                {menuItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = location.pathname === item.path || location.pathname.startsWith(item.path + '/');
+                  return (
+                    <Link key={item.path} to={item.path} onClick={closeMobileSidebar}>
+                      <div
+                        className={cn(
+                          'flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-200',
+                          isActive
+                            ? 'bg-[#1B5E3D]/10 dark:bg-[#3D9A6A]/15 text-[#1B5E3D] dark:text-[#3D9A6A]'
+                            : 'text-[#5A7265] dark:text-[#8BA898] hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26] hover:text-[#1A2E23] dark:hover:text-[#E8F0EC]'
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            'flex h-9 w-9 items-center justify-center rounded-lg transition-all',
+                            isActive
+                              ? 'bg-[#1B5E3D] dark:bg-[#2D7A50] text-white shadow-md shadow-[#1B5E3D]/25'
+                              : 'bg-[#E8F0EC] dark:bg-[#1E2D26]'
+                          )}
+                        >
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <span className="font-medium">{item.label}</span>
+                        {isActive && (
+                          <div className="ml-auto h-2 w-2 rounded-full bg-[#F5A623]" />
+                        )}
+                      </div>
+                    </Link>
+                  );
+                })}
+
+                {/* User Account Section */}
+                <Separator className="my-4 bg-[#D1DDD6] dark:bg-[#2D3F35]" />
+                <p className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-[#5A7265] dark:text-[#8BA898]">
+                  Mon compte
+                </p>
+                {userAccountMenuItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = location.pathname === item.path;
+                  return (
+                    <Link key={item.path} to={item.path} onClick={closeMobileSidebar}>
+                      <div
+                        className={cn(
+                          'flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-200',
+                          isActive
+                            ? 'bg-[#1B5E3D]/10 dark:bg-[#3D9A6A]/15 text-[#1B5E3D] dark:text-[#3D9A6A]'
+                            : 'text-[#5A7265] dark:text-[#8BA898] hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26] hover:text-[#1A2E23] dark:hover:text-[#E8F0EC]'
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            'flex h-9 w-9 items-center justify-center rounded-lg transition-all',
+                            isActive
+                              ? 'bg-[#1B5E3D] dark:bg-[#2D7A50] text-white shadow-md shadow-[#1B5E3D]/25'
+                              : 'bg-[#E8F0EC] dark:bg-[#1E2D26]'
+                          )}
+                        >
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <span className="font-medium">{item.label}</span>
+                        {isActive && (
+                          <div className="ml-auto h-2 w-2 rounded-full bg-[#F5A623]" />
+                        )}
+                      </div>
+                    </Link>
+                  );
+                })}
+              </nav>
+            </ScrollArea>
+          </motion.aside>
+        )}
+      </AnimatePresence>
     </TooltipProvider>
   );
 }

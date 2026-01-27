@@ -454,14 +454,14 @@ export function SettingsPage() {
               Actions irréversibles sur votre compte
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex items-center justify-between">
+          <CardContent className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <p className="font-medium text-foreground">Supprimer le compte</p>
               <p className="text-sm text-muted-foreground">
                 Cette action supprimera définitivement votre compte et toutes vos données
               </p>
             </div>
-            <Button variant="destructive">
+            <Button variant="destructive" className="w-full sm:w-auto shrink-0">
               Supprimer mon compte
             </Button>
           </CardContent>

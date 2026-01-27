@@ -399,9 +399,9 @@ export function ProfilePage() {
               </div>
 
               {/* Auto-renewal toggle */}
-              <div className="flex items-center justify-between p-4 rounded-lg border border-[#D1DDD6] dark:border-[#2D3F35]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-lg border border-[#D1DDD6] dark:border-[#2D3F35]">
                 <div className="flex items-center gap-3">
-                  <RefreshCw className={cn("h-5 w-5", user.autoRenew ? "text-green-500" : "text-gray-400")} />
+                  <RefreshCw className={cn("h-5 w-5 shrink-0", user.autoRenew ? "text-green-500" : "text-gray-400")} />
                   <div>
                     <p className="font-medium text-[#1A2E23] dark:text-[#E8F0EC]">Renouvellement automatique</p>
                     <p className="text-sm text-[#5A7265] dark:text-[#8BA898]">
@@ -416,7 +416,7 @@ export function ProfilePage() {
                   size="sm"
                   onClick={handleToggleAutoRenew}
                   disabled={isTogglingAutoRenew}
-                  className={user.autoRenew ? "" : "bg-[#1B5E3D] hover:bg-[#144832]"}
+                  className={cn("w-full sm:w-auto shrink-0", user.autoRenew ? "" : "bg-[#1B5E3D] hover:bg-[#144832]")}
                 >
                   {isTogglingAutoRenew ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -429,9 +429,9 @@ export function ProfilePage() {
               </div>
 
               {/* Cancel subscription */}
-              <div className="flex items-center justify-between p-4 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/10">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/10">
                 <div className="flex items-center gap-3">
-                  <XCircle className="h-5 w-5 text-red-500" />
+                  <XCircle className="h-5 w-5 text-red-500 shrink-0" />
                   <div>
                     <p className="font-medium text-red-800 dark:text-red-200">Annuler l'abonnement</p>
                     <p className="text-sm text-red-600 dark:text-red-400">
@@ -444,6 +444,7 @@ export function ProfilePage() {
                   size="sm"
                   onClick={handleCancelSubscription}
                   disabled={isCancelling}
+                  className="w-full sm:w-auto shrink-0"
                 >
                   {isCancelling ? (
                     <Loader2 className="h-4 w-4 animate-spin" />

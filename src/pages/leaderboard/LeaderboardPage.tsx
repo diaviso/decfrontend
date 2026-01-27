@@ -153,20 +153,20 @@ export function LeaderboardPage() {
 
       {/* Top 3 Podium */}
       {leaderboard.length >= 3 && (
-        <motion.div variants={itemVariants} className="grid grid-cols-3 gap-4">
+        <motion.div variants={itemVariants} className="grid grid-cols-3 gap-2 sm:gap-4">
           {/* 2nd Place */}
-          <div className="mt-8">
+          <div className="mt-4 sm:mt-8">
             <Card className={cn('border-2', getRankStyle(2))}>
-              <CardContent className="pt-6 text-center">
-                <div className="mx-auto w-16 h-16 rounded-full bg-gradient-to-br from-gray-200 to-slate-300 dark:from-gray-700 dark:to-slate-600 flex items-center justify-center mb-3">
-                  <Medal className="h-8 w-8 text-gray-500" />
+              <CardContent className="pt-4 sm:pt-6 text-center px-2 sm:px-6">
+                <div className="mx-auto w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-gray-200 to-slate-300 dark:from-gray-700 dark:to-slate-600 flex items-center justify-center mb-2 sm:mb-3">
+                  <Medal className="h-5 w-5 sm:h-8 sm:w-8 text-gray-500" />
                 </div>
-                <p className="text-2xl font-bold text-gray-500">2</p>
-                <p className="font-semibold truncate">
+                <p className="text-lg sm:text-2xl font-bold text-gray-500">2</p>
+                <p className="font-semibold truncate text-xs sm:text-base">
                   {leaderboard[1].firstName} {leaderboard[1].lastName.charAt(0)}.
                 </p>
-                <p className="text-sm text-muted-foreground flex items-center justify-center gap-1 mt-1">
-                  <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                <p className="text-xs sm:text-sm text-muted-foreground flex items-center justify-center gap-1 mt-1">
+                  <Star className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500 fill-yellow-500" />
                   {leaderboard[1].stars}
                 </p>
               </CardContent>
@@ -176,16 +176,16 @@ export function LeaderboardPage() {
           {/* 1st Place */}
           <div>
             <Card className={cn('border-2 shadow-lg', getRankStyle(1))}>
-              <CardContent className="pt-6 text-center">
-                <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-yellow-300 to-amber-400 dark:from-yellow-600 dark:to-amber-700 flex items-center justify-center mb-3 shadow-lg">
-                  <Crown className="h-10 w-10 text-yellow-700 dark:text-yellow-200" />
+              <CardContent className="pt-4 sm:pt-6 text-center px-2 sm:px-6">
+                <div className="mx-auto w-12 h-12 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-yellow-300 to-amber-400 dark:from-yellow-600 dark:to-amber-700 flex items-center justify-center mb-2 sm:mb-3 shadow-lg">
+                  <Crown className="h-6 w-6 sm:h-10 sm:w-10 text-yellow-700 dark:text-yellow-200" />
                 </div>
-                <p className="text-3xl font-bold text-yellow-600 dark:text-yellow-400">1</p>
-                <p className="font-semibold truncate text-lg">
+                <p className="text-xl sm:text-3xl font-bold text-yellow-600 dark:text-yellow-400">1</p>
+                <p className="font-semibold truncate text-sm sm:text-lg">
                   {leaderboard[0].firstName} {leaderboard[0].lastName.charAt(0)}.
                 </p>
-                <p className="text-sm text-muted-foreground flex items-center justify-center gap-1 mt-1">
-                  <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                <p className="text-xs sm:text-sm text-muted-foreground flex items-center justify-center gap-1 mt-1">
+                  <Star className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500 fill-yellow-500" />
                   {leaderboard[0].stars}
                 </p>
               </CardContent>
@@ -193,18 +193,18 @@ export function LeaderboardPage() {
           </div>
 
           {/* 3rd Place */}
-          <div className="mt-12">
+          <div className="mt-6 sm:mt-12">
             <Card className={cn('border-2', getRankStyle(3))}>
-              <CardContent className="pt-6 text-center">
-                <div className="mx-auto w-14 h-14 rounded-full bg-gradient-to-br from-amber-200 to-orange-300 dark:from-amber-700 dark:to-orange-700 flex items-center justify-center mb-3">
-                  <Medal className="h-7 w-7 text-amber-700 dark:text-amber-300" />
+              <CardContent className="pt-4 sm:pt-6 text-center px-2 sm:px-6">
+                <div className="mx-auto w-9 h-9 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-amber-200 to-orange-300 dark:from-amber-700 dark:to-orange-700 flex items-center justify-center mb-2 sm:mb-3">
+                  <Medal className="h-4 w-4 sm:h-7 sm:w-7 text-amber-700 dark:text-amber-300" />
                 </div>
-                <p className="text-xl font-bold text-amber-600 dark:text-amber-400">3</p>
-                <p className="font-semibold truncate">
+                <p className="text-base sm:text-xl font-bold text-amber-600 dark:text-amber-400">3</p>
+                <p className="font-semibold truncate text-xs sm:text-base">
                   {leaderboard[2].firstName} {leaderboard[2].lastName.charAt(0)}.
                 </p>
-                <p className="text-sm text-muted-foreground flex items-center justify-center gap-1 mt-1">
-                  <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                <p className="text-xs sm:text-sm text-muted-foreground flex items-center justify-center gap-1 mt-1">
+                  <Star className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-500 fill-yellow-500" />
                   {leaderboard[2].stars}
                 </p>
               </CardContent>
