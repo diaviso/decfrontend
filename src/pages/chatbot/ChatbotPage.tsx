@@ -110,7 +110,8 @@ export function ChatbotPage() {
         content: msg.content,
       }));
 
-      const response = await fetch('/api/chatbot/stream', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+      const response = await fetch(`${apiUrl}/chatbot/stream`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
