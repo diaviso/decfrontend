@@ -5,10 +5,10 @@ import {
   HelpCircle,
   FileText,
   MessageSquare,
-  TrendingUp,
-  Users,
+  Star,
   Award,
   Clock,
+  BarChart3,
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuthStore } from '@/store/auth';
@@ -121,16 +121,16 @@ export function DashboardPage() {
           </p>
           <div className="mt-6 flex flex-wrap gap-4">
             <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/10">
-              <Award className="h-5 w-5 text-[#F5A623]" />
-              <span>Niveau 12</span>
+              <Star className="h-5 w-5 text-[#F5A623] fill-[#F5A623]" />
+              <span>{(user as any)?.stars || 0} étoiles</span>
             </div>
             <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/10">
-              <TrendingUp className="h-5 w-5 text-[#F5A623]" />
-              <span>2,450 XP</span>
+              <Award className="h-5 w-5 text-[#F5A623]" />
+              <span>{stats?.userQuizAttempts || 0} quiz complétés</span>
             </div>
             <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/10">
               <Clock className="h-5 w-5 text-[#F5A623]" />
-              <span>32h d'apprentissage</span>
+              <span>{progress?.quizSuccessRate || 0}% de réussite</span>
             </div>
           </div>
         </div>
@@ -253,7 +253,7 @@ export function DashboardPage() {
           <Card className="border border-[#D1DDD6] dark:border-[#2D3F35] shadow-lg h-full bg-white dark:bg-[#141F1A]">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-[#1A2E23] dark:text-[#E8F0EC]">
-                <Users className="h-5 w-5 text-[#1B5E3D] dark:text-[#3D9A6A]" />
+                <BarChart3 className="h-5 w-5 text-[#1B5E3D] dark:text-[#3D9A6A]" />
                 Statistiques
               </CardTitle>
               <CardDescription className="text-[#5A7265] dark:text-[#8BA898]">Votre progression globale</CardDescription>
