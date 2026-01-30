@@ -11,7 +11,8 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useAuthStore } from '@/store/auth';
-import { cn } from '@/lib/utils';
+import { cn, getAvatarUrl } from '@/lib/utils';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import api from '@/lib/api';
 import type { LeaderboardEntry, UserPosition } from '@/types';
 
@@ -254,6 +255,14 @@ export function LeaderboardPage() {
                       )}>
                         {getRankIcon(entry.rank) || entry.rank}
                       </div>
+
+                      {/* Avatar */}
+                      <Avatar className="h-10 w-10 ring-2 ring-[#D1DDD6] dark:ring-[#2D3F35]">
+                        <AvatarImage src={getAvatarUrl(entry.avatar)} alt={entry.firstName} />
+                        <AvatarFallback className="bg-[#1B5E3D] text-white font-medium text-sm">
+                          {entry.firstName?.[0]}{entry.lastName?.[0]}
+                        </AvatarFallback>
+                      </Avatar>
 
                       {/* User Info */}
                       <div className="flex-1 min-w-0">

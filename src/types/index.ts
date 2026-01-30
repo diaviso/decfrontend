@@ -81,6 +81,7 @@ export interface LeaderboardEntry {
   userId: string;
   firstName: string;
   lastName: string;
+  avatar: string | null;
   stars: number;
 }
 

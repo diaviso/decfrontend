@@ -11,7 +11,7 @@ import {
   Settings,
   Menu,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, getAvatarUrl } from '@/lib/utils';
 import { useThemeStore } from '@/store/theme';
 import { useAuthStore } from '@/store/auth';
 import { Button } from '@/components/ui/button';
@@ -47,7 +47,7 @@ export function Header() {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-10 w-10 rounded-xl p-0 hover:bg-[#E8F0EC] dark:hover:bg-[#1E2D26]">
           <Avatar className="h-9 w-9 ring-2 ring-[#D1DDD6] dark:ring-[#2D3F35] transition-all hover:ring-[#1B5E3D]/40 dark:hover:ring-[#3D9A6A]/40">
-            <AvatarImage src="" alt={user?.firstName} />
+            <AvatarImage src={getAvatarUrl((user as any)?.avatar)} alt={user?.firstName} />
             <AvatarFallback className="bg-[#1B5E3D] dark:bg-[#2D7A50] text-white font-medium text-sm">
               {getInitials()}
             </AvatarFallback>

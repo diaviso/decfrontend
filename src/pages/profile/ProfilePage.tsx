@@ -13,7 +13,7 @@ import {
   RefreshCw,
   XCircle,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { cn, getAvatarUrl } from '@/lib/utils';
 import { useAuthStore } from '@/store/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -199,7 +199,7 @@ export function ProfilePage() {
             <CardContent className="pt-0 -mt-12 text-center">
               <div className="relative inline-block">
                 <Avatar className="h-24 w-24 ring-4 ring-background shadow-xl">
-                  <AvatarImage src={(user as any)?.avatar ? `${import.meta.env.VITE_API_URL || 'http://localhost:3000'}${(user as any).avatar}` : ''} alt={user?.firstName} />
+                  <AvatarImage src={getAvatarUrl((user as any)?.avatar)} alt={user?.firstName} />
                   <AvatarFallback className="bg-[#1B5E3D] text-white text-2xl font-bold">
                     {getInitials()}
                   </AvatarFallback>
