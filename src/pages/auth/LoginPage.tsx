@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Mail, Lock, Eye, EyeOff, Loader2, LogIn } from 'lucide-react';
+import { Mail, Lock, Eye, EyeOff, Loader2, LogIn, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { useToast } from '@/hooks/use-toast';
 import { useAuthStore } from '@/store/auth';
 import api from '@/lib/api';
@@ -17,15 +25,25 @@ export function LoginPage() {
   const { setAuth } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isCheckingSession, setIsCheckingSession] = useState(false);
+  const [showSessionWarning, setShowSessionWarning] = useState(false);
+  const [sessionExpiredMessage, setSessionExpiredMessage] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+  // Check for session expired flag on mount
+  useEffect(() => {
+    const expired = sessionStorage.getItem('sessionExpired');
+    if (expired) {
+      setSessionExpiredMessage(true);
+      sessionStorage.removeItem('sessionExpired');
+    }
+  }, []);
 
+  const performLogin = async () => {
+    setIsLoading(true);
     try {
       const response = await api.post('/auth/login', formData);
       const { token, user } = response.data;
@@ -49,6 +67,34 @@ export function LoginPage() {
     }
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsCheckingSession(true);
+
+    try {
+      // Check if user has an active session
+      const sessionCheck = await api.post('/auth/check-session', { email: formData.email });
+      
+      if (sessionCheck.data.hasActiveSession) {
+        // Show warning dialog
+        setShowSessionWarning(true);
+      } else {
+        // No active session, proceed with login
+        await performLogin();
+      }
+    } catch {
+      // If check fails, proceed with login anyway
+      await performLogin();
+    } finally {
+      setIsCheckingSession(false);
+    }
+  };
+
+  const handleConfirmLogin = async () => {
+    setShowSessionWarning(false);
+    await performLogin();
+  };
+
   const handleGoogleLogin = () => {
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
     window.location.href = `${API_URL}/auth/google`;
@@ -64,6 +110,29 @@ export function LoginPage() {
         <h1 className="text-3xl font-bold text-[#1B5E3D] dark:text-[#3D9A6A]">DEC Learning</h1>
         <p className="text-muted-foreground mt-2">Plateforme d'apprentissage</p>
       </div>
+
+      {/* Session Expired Alert */}
+      {sessionExpiredMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 flex items-start gap-3"
+        >
+          <AlertTriangle className="h-5 w-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <div>
+            <p className="font-medium text-amber-800 dark:text-amber-200">Session terminée</p>
+            <p className="text-sm text-amber-700 dark:text-amber-300">
+              Vous avez été déconnecté car une connexion a été établie depuis un autre appareil.
+            </p>
+          </div>
+          <button
+            onClick={() => setSessionExpiredMessage(false)}
+            className="ml-auto text-amber-600 hover:text-amber-800 dark:hover:text-amber-400"
+          >
+            ×
+          </button>
+        </motion.div>
+      )}
 
       <Card className="border-0 shadow-2xl bg-white/95 dark:bg-[#141F1A]/95 backdrop-blur-xl overflow-hidden">
         {/* Decorative top border with brand gradient */}
@@ -180,12 +249,12 @@ export function LoginPage() {
               <Button
                 type="submit"
                 className="w-full h-12 text-base font-semibold bg-[#1B5E3D] hover:bg-[#144832] dark:bg-[#2D7A50] dark:hover:bg-[#1B5E3D] text-white shadow-lg shadow-[#1B5E3D]/25 dark:shadow-[#2D7A50]/25 transition-all duration-200"
-                disabled={isLoading}
+                disabled={isLoading || isCheckingSession}
               >
-                {isLoading ? (
+                {isLoading || isCheckingSession ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Connexion...
+                    {isCheckingSession ? 'Vérification...' : 'Connexion...'}
                   </>
                 ) : (
                   <>
@@ -208,6 +277,50 @@ export function LoginPage() {
           </p>
         </CardContent>
       </Card>
+
+      {/* Session Warning Dialog */}
+      <Dialog open={showSessionWarning} onOpenChange={setShowSessionWarning}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-full bg-amber-100 dark:bg-amber-900/30">
+                <AlertTriangle className="h-6 w-6 text-amber-600" />
+              </div>
+              <DialogTitle>Session active détectée</DialogTitle>
+            </div>
+            <DialogDescription className="pt-2">
+              Vous êtes actuellement connecté sur un autre appareil. Si vous continuez, vous serez automatiquement déconnecté de l'autre appareil.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 my-2">
+            <p className="text-sm text-amber-800 dark:text-amber-200">
+              <strong>Note :</strong> Pour des raisons de sécurité, un seul appareil peut être connecté à la fois sur votre compte.
+            </p>
+          </div>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button
+              variant="outline"
+              onClick={() => setShowSessionWarning(false)}
+            >
+              Annuler
+            </Button>
+            <Button
+              onClick={handleConfirmLogin}
+              disabled={isLoading}
+              className="bg-[#1B5E3D] hover:bg-[#144832] text-white"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Connexion...
+                </>
+              ) : (
+                'Continuer et me connecter'
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
