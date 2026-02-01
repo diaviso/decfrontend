@@ -15,6 +15,9 @@ export interface User {
   autoRenew: boolean;
   stripeCustomerId?: string;
   stripeSubscriptionId?: string;
+  emailNotifications?: boolean;
+  pushNotifications?: boolean;
+  marketingEmails?: boolean;
   createdAt: string;
   updatedAt: string;
 }

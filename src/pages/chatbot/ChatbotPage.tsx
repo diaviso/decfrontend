@@ -12,12 +12,18 @@ import {
   HelpCircle,
   Info,
   RotateCcw,
+  Plus,
+  MessageSquare,
+  Trash2,
+  ChevronLeft,
+  AlertTriangle,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/store/auth';
+import api from '@/lib/api';
 
 interface Message {
   id: string;
@@ -25,6 +31,16 @@ interface Message {
   content: string;
   timestamp: Date;
   isStreaming?: boolean;
+}
+
+interface Conversation {
+  id: string;
+  title: string;
+  topic?: string;
+  createdAt: string;
+  updatedAt: string;
+  messages: { id: string; role: string; content: string; createdAt: string }[];
+  _count?: { messages: number };
 }
 
 const suggestedQuestions = [
@@ -63,6 +79,11 @@ export function ChatbotPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [currentConversationId, setCurrentConversationId] = useState<string | null>(null);
+  const [showSidebar, setShowSidebar] = useState(false);
+  const [limitReached, setLimitReached] = useState(false);
+  const [isLoadingConversations, setIsLoadingConversations] = useState(true);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -76,8 +97,73 @@ export function ChatbotPage() {
     scrollToBottom();
   }, [messages, scrollToBottom]);
 
+  // Load conversations on mount
+  useEffect(() => {
+    loadConversations();
+  }, []);
+
+  const loadConversations = async () => {
+    try {
+      setIsLoadingConversations(true);
+      const response = await api.get('/chatbot/conversations');
+      setConversations(response.data);
+    } catch (error) {
+      console.error('Failed to load conversations:', error);
+    } finally {
+      setIsLoadingConversations(false);
+    }
+  };
+
+  const loadConversation = async (conversationId: string) => {
+    try {
+      const response = await api.get(`/chatbot/conversations/${conversationId}`);
+      const conv = response.data;
+      setCurrentConversationId(conversationId);
+      setMessages(
+        conv.messages.map((m: { id: string; role: string; content: string; createdAt: string }) => ({
+          id: m.id,
+          role: m.role as 'user' | 'assistant',
+          content: m.content,
+          timestamp: new Date(m.createdAt),
+        }))
+      );
+      setLimitReached(conv.messages.length >= 30);
+      setShowSidebar(false);
+    } catch (error) {
+      toast({
+        title: 'Erreur',
+        description: 'Impossible de charger la conversation',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const deleteConversation = async (conversationId: string) => {
+    try {
+      await api.delete(`/chatbot/conversations/${conversationId}`);
+      setConversations((prev) => prev.filter((c) => c.id !== conversationId));
+      if (currentConversationId === conversationId) {
+        handleNewConversation();
+      }
+      toast({ title: 'Conversation supprimée' });
+    } catch (error) {
+      toast({
+        title: 'Erreur',
+        description: 'Impossible de supprimer la conversation',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleNewConversation = () => {
+    setCurrentConversationId(null);
+    setMessages([]);
+    setLimitReached(false);
+    setShowSidebar(false);
+  };
+
   const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || isLoading || limitReached) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -105,11 +191,6 @@ export function ChatbotPage() {
     ]);
 
     try {
-      const conversationHistory = messages.map((msg) => ({
-        role: msg.role,
-        content: msg.content,
-      }));
-
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
       const response = await fetch(`${apiUrl}/chatbot/stream`, {
         method: 'POST',
@@ -119,7 +200,7 @@ export function ChatbotPage() {
         },
         body: JSON.stringify({
           message: userMessage.content,
-          conversationHistory,
+          conversationId: currentConversationId,
         }),
       });
 
@@ -147,6 +228,12 @@ export function ChatbotPage() {
           if (line.startsWith('data: ')) {
             try {
               const data = JSON.parse(line.slice(6));
+              
+              // Handle conversation ID from first message
+              if (data.conversationId && !currentConversationId) {
+                setCurrentConversationId(data.conversationId);
+              }
+              
               if (data.content) {
                 fullContent += data.content;
                 setMessages((prev) =>
@@ -165,20 +252,27 @@ export function ChatbotPage() {
                       : msg
                   )
                 );
+                // Check if limit reached
+                if (data.limitReached) {
+                  setLimitReached(true);
+                }
+                // Reload conversations to update sidebar
+                loadConversations();
               }
               if (data.error) {
                 throw new Error(data.error);
               }
-            } catch (e) {
+            } catch {
               // Ignore JSON parse errors for incomplete chunks
             }
           }
         }
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const err = error as { message?: string };
       toast({
         title: 'Erreur',
-        description: error.message || 'Impossible de contacter l\'assistant',
+        description: err.message || 'Impossible de contacter l\'assistant',
         variant: 'destructive',
       });
       // Remove the assistant message on error
@@ -189,7 +283,7 @@ export function ChatbotPage() {
   };
 
   const handleClearChat = () => {
-    setMessages([]);
+    handleNewConversation();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -205,35 +299,134 @@ export function ChatbotPage() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-6rem)] max-h-[calc(100vh-6rem)]">
-      {/* Header - Fixed */}
-      <div className="flex-shrink-0 flex items-center justify-between pb-3 border-b border-[#D1DDD6] dark:border-[#2D3F35] mb-3">
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-[#1B5E3D] via-[#2D7A50] to-[#3D9A6A] flex items-center justify-center shadow-lg">
-              <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+    <div className="flex h-[calc(100vh-6rem)] max-h-[calc(100vh-6rem)]">
+      {/* Sidebar - Conversations History */}
+      <AnimatePresence>
+        {showSidebar && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+              onClick={() => setShowSidebar(false)}
+            />
+            <motion.div
+              initial={{ x: -280 }}
+              animate={{ x: 0 }}
+              exit={{ x: -280 }}
+              className="fixed left-0 top-0 h-full w-[280px] bg-background border-r z-50 lg:relative lg:z-0 flex flex-col"
+            >
+              <div className="p-4 border-b flex items-center justify-between">
+                <h2 className="font-semibold">Historique</h2>
+                <Button variant="ghost" size="icon" onClick={() => setShowSidebar(false)} className="lg:hidden">
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+              </div>
+              <div className="flex-1 overflow-y-auto p-2">
+                <Button
+                  variant="outline"
+                  className="w-full mb-2 gap-2"
+                  onClick={handleNewConversation}
+                >
+                  <Plus className="h-4 w-4" />
+                  Nouvelle conversation
+                </Button>
+                {isLoadingConversations ? (
+                  <div className="flex justify-center py-4">
+                    <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+                  </div>
+                ) : conversations.length === 0 ? (
+                  <p className="text-sm text-muted-foreground text-center py-4">
+                    Aucune conversation
+                  </p>
+                ) : (
+                  <div className="space-y-1">
+                    {conversations.map((conv) => (
+                      <div
+                        key={conv.id}
+                        className={cn(
+                          'group flex items-center gap-2 p-2 rounded-lg cursor-pointer hover:bg-muted transition-colors',
+                          currentConversationId === conv.id && 'bg-muted'
+                        )}
+                        onClick={() => loadConversation(conv.id)}
+                      >
+                        <MessageSquare className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium truncate">{conv.title}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {conv._count?.messages || 0} messages
+                          </p>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            deleteConversation(conv.id);
+                          }}
+                        >
+                          <Trash2 className="h-3 w-3 text-destructive" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Main Chat Area */}
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Header - Fixed */}
+        <div className="flex-shrink-0 flex items-center justify-between pb-3 border-b border-[#D1DDD6] dark:border-[#2D3F35] mb-3">
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setShowSidebar(true)}
+              className="h-10 w-10"
+            >
+              <MessageSquare className="h-5 w-5" />
+            </Button>
+            <div className="relative">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-[#1B5E3D] via-[#2D7A50] to-[#3D9A6A] flex items-center justify-center shadow-lg">
+                <Bot className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+              </div>
+              <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-[#3D9A6A] rounded-full border-2 border-background" />
             </div>
-            <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-[#3D9A6A] rounded-full border-2 border-background" />
+            <div>
+              <h1 className="text-lg sm:text-xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">DEC Assistant</h1>
+              <p className="text-xs sm:text-sm text-[#5A7265] dark:text-[#8BA898] hidden sm:block">
+                Déontologie, DEC & Application
+              </p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-lg sm:text-xl font-bold text-[#1A2E23] dark:text-[#E8F0EC]">DEC Assistant</h1>
-            <p className="text-xs sm:text-sm text-[#5A7265] dark:text-[#8BA898] hidden sm:block">
-              Déontologie, DEC & Application
-            </p>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleNewConversation}
+              className="gap-1.5"
+            >
+              <Plus className="h-4 w-4" />
+              <span className="hidden sm:inline">Nouveau</span>
+            </Button>
+            {messages.length > 0 && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleClearChat}
+                className="gap-1.5 text-muted-foreground hover:text-destructive"
+              >
+                <RotateCcw className="h-4 w-4" />
+              </Button>
+            )}
           </div>
         </div>
-        {messages.length > 0 && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleClearChat}
-            className="gap-1.5 text-muted-foreground hover:text-destructive"
-          >
-            <RotateCcw className="h-4 w-4" />
-            <span className="hidden sm:inline">Effacer</span>
-          </Button>
-        )}
-      </div>
 
       {/* Messages Area - Scrollable */}
       <div
@@ -397,6 +590,97 @@ export function ChatbotPage() {
         )}
       </div>
 
+      {/* Limit Reached Alert */}
+      {limitReached && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mx-1 mb-3 p-3 rounded-lg bg-amber-100 dark:bg-amber-900/30 border border-amber-300 dark:border-amber-700"
+        >
+          <div className="flex items-start gap-2">
+            <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-medium text-amber-800 dark:text-amber-200">
+                Limite de conversation atteinte
+              </p>
+              <p className="text-xs text-amber-700 dark:text-amber-300 mt-1">
+                Cette conversation a atteint la limite de 30 messages. Créez une nouvelle conversation pour continuer.
+              </p>
+              <Button
+                size="sm"
+                className="mt-2 bg-amber-600 hover:bg-amber-700 text-white"
+                onClick={handleNewConversation}
+              >
+                <Plus className="h-4 w-4 mr-1" />
+                Nouvelle conversation
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Messages Counter Info */}
+      {messages.length > 0 && !limitReached && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="mx-1 mb-2"
+        >
+          <div className="flex items-center justify-center gap-3 py-2 px-4 rounded-full bg-gradient-to-r from-[#1B5E3D]/5 to-[#3D9A6A]/5 border border-[#1B5E3D]/10">
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <svg className="w-8 h-8 transform -rotate-90">
+                  <circle
+                    cx="16"
+                    cy="16"
+                    r="12"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    fill="none"
+                    className="text-[#1B5E3D]/20"
+                  />
+                  <circle
+                    cx="16"
+                    cy="16"
+                    r="12"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    fill="none"
+                    strokeDasharray={`${((30 - messages.length) / 30) * 75.4} 75.4`}
+                    className={cn(
+                      "transition-all duration-500",
+                      messages.length >= 24 ? "text-amber-500" : 
+                      messages.length >= 20 ? "text-[#F5A623]" : "text-[#1B5E3D]"
+                    )}
+                  />
+                </svg>
+                <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-[#1B5E3D] dark:text-[#3D9A6A]">
+                  {30 - messages.length}
+                </span>
+              </div>
+              <div className="text-xs">
+                <span className={cn(
+                  "font-semibold",
+                  messages.length >= 24 ? "text-amber-600 dark:text-amber-400" : 
+                  messages.length >= 20 ? "text-[#F5A623]" : "text-[#1B5E3D] dark:text-[#3D9A6A]"
+                )}>
+                  {Math.floor((30 - messages.length) / 2)} échanges
+                </span>
+                <span className="text-muted-foreground"> restants</span>
+              </div>
+            </div>
+            {messages.length >= 20 && (
+              <div className="h-4 w-px bg-border" />
+            )}
+            {messages.length >= 20 && messages.length < 30 && (
+              <p className="text-xs text-amber-600 dark:text-amber-400">
+                Conversation bientôt saturée
+              </p>
+            )}
+          </div>
+        </motion.div>
+      )}
+
       {/* Input Area - Fixed at bottom */}
       <div className="flex-shrink-0 border-t pt-3 mt-auto bg-background">
         <div className="flex gap-2 items-end">
@@ -405,14 +689,14 @@ export function ChatbotPage() {
             value={input}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Posez votre question..."
-            disabled={isLoading}
+            placeholder={limitReached ? "Limite atteinte - Créez une nouvelle conversation" : "Posez votre question..."}
+            disabled={isLoading || limitReached}
             className="flex-1 min-h-[44px] max-h-[120px] resize-none text-sm"
             rows={1}
           />
           <Button
             onClick={handleSend}
-            disabled={!input.trim() || isLoading}
+            disabled={!input.trim() || isLoading || limitReached}
             size="icon"
             className="h-[44px] w-[44px] rounded-xl bg-[#1B5E3D] hover:bg-[#144832]"
           >
@@ -426,6 +710,7 @@ export function ChatbotPage() {
         <p className="text-[10px] text-muted-foreground mt-1.5 text-center">
           Entrée pour envoyer • Shift+Entrée pour saut de ligne
         </p>
+      </div>
       </div>
     </div>
   );

@@ -159,8 +159,16 @@ export function LeaderboardPage() {
           <div className="mt-4 sm:mt-8">
             <Card className={cn('border-2', getRankStyle(2))}>
               <CardContent className="pt-4 sm:pt-6 text-center px-2 sm:px-6">
-                <div className="mx-auto w-10 h-10 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-gray-200 to-slate-300 dark:from-gray-700 dark:to-slate-600 flex items-center justify-center mb-2 sm:mb-3">
-                  <Medal className="h-5 w-5 sm:h-8 sm:w-8 text-gray-500" />
+                <div className="relative mx-auto mb-2 sm:mb-3">
+                  <Avatar className="w-10 h-10 sm:w-16 sm:h-16 ring-4 ring-gray-300 dark:ring-gray-600 mx-auto">
+                    <AvatarImage src={getAvatarUrl(leaderboard[1].avatar)} alt={leaderboard[1].firstName} />
+                    <AvatarFallback className="bg-gradient-to-br from-gray-200 to-slate-300 dark:from-gray-700 dark:to-slate-600 text-gray-600 dark:text-gray-300 text-sm sm:text-xl font-bold">
+                      {leaderboard[1].firstName?.[0]}{leaderboard[1].lastName?.[0]}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-gray-400 flex items-center justify-center shadow-md">
+                    <Medal className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+                  </div>
                 </div>
                 <p className="text-lg sm:text-2xl font-bold text-gray-500">2</p>
                 <p className="font-semibold truncate text-xs sm:text-base">
@@ -178,8 +186,16 @@ export function LeaderboardPage() {
           <div>
             <Card className={cn('border-2 shadow-lg', getRankStyle(1))}>
               <CardContent className="pt-4 sm:pt-6 text-center px-2 sm:px-6">
-                <div className="mx-auto w-12 h-12 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-yellow-300 to-amber-400 dark:from-yellow-600 dark:to-amber-700 flex items-center justify-center mb-2 sm:mb-3 shadow-lg">
-                  <Crown className="h-6 w-6 sm:h-10 sm:w-10 text-yellow-700 dark:text-yellow-200" />
+                <div className="relative mx-auto mb-2 sm:mb-3">
+                  <Avatar className="w-12 h-12 sm:w-20 sm:h-20 ring-4 ring-yellow-400 dark:ring-yellow-500 mx-auto shadow-lg">
+                    <AvatarImage src={getAvatarUrl(leaderboard[0].avatar)} alt={leaderboard[0].firstName} />
+                    <AvatarFallback className="bg-gradient-to-br from-yellow-300 to-amber-400 dark:from-yellow-600 dark:to-amber-700 text-yellow-800 dark:text-yellow-100 text-base sm:text-2xl font-bold">
+                      {leaderboard[0].firstName?.[0]}{leaderboard[0].lastName?.[0]}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-yellow-500 flex items-center justify-center shadow-md">
+                    <Crown className="h-3 w-3 sm:h-5 sm:w-5 text-white" />
+                  </div>
                 </div>
                 <p className="text-xl sm:text-3xl font-bold text-yellow-600 dark:text-yellow-400">1</p>
                 <p className="font-semibold truncate text-sm sm:text-lg">
@@ -197,8 +213,16 @@ export function LeaderboardPage() {
           <div className="mt-6 sm:mt-12">
             <Card className={cn('border-2', getRankStyle(3))}>
               <CardContent className="pt-4 sm:pt-6 text-center px-2 sm:px-6">
-                <div className="mx-auto w-9 h-9 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-amber-200 to-orange-300 dark:from-amber-700 dark:to-orange-700 flex items-center justify-center mb-2 sm:mb-3">
-                  <Medal className="h-4 w-4 sm:h-7 sm:w-7 text-amber-700 dark:text-amber-300" />
+                <div className="relative mx-auto mb-2 sm:mb-3">
+                  <Avatar className="w-9 h-9 sm:w-14 sm:h-14 ring-4 ring-amber-400 dark:ring-amber-600 mx-auto">
+                    <AvatarImage src={getAvatarUrl(leaderboard[2].avatar)} alt={leaderboard[2].firstName} />
+                    <AvatarFallback className="bg-gradient-to-br from-amber-200 to-orange-300 dark:from-amber-700 dark:to-orange-700 text-amber-800 dark:text-amber-200 text-xs sm:text-lg font-bold">
+                      {leaderboard[2].firstName?.[0]}{leaderboard[2].lastName?.[0]}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="absolute -bottom-1 -right-1 sm:-bottom-2 sm:-right-2 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-amber-500 flex items-center justify-center shadow-md">
+                    <Medal className="h-3 w-3 sm:h-4 sm:w-4 text-white" />
+                  </div>
                 </div>
                 <p className="text-base sm:text-xl font-bold text-amber-600 dark:text-amber-400">3</p>
                 <p className="font-semibold truncate text-xs sm:text-base">

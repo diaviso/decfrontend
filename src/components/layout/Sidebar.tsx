@@ -18,6 +18,8 @@ import {
   FolderOpen,
   Crown,
   X,
+  Sparkles,
+  Mail,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useThemeStore } from '@/store/theme';
@@ -32,6 +34,7 @@ const userMainMenuItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
   { icon: BookOpen, label: 'Thèmes', path: '/themes' },
   { icon: HelpCircle, label: 'Quiz', path: '/quizzes' },
+  { icon: Sparkles, label: 'Réviser la DEC', path: '/revision', premiumOnly: true },
   { icon: History, label: 'Historique', path: '/history' },
   { icon: Trophy, label: 'Classement', path: '/leaderboard' },
   { icon: FileText, label: 'Blog', path: '/blog' },
@@ -45,13 +48,16 @@ const adminMainMenuItems = [
   { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
   { icon: BookOpen, label: 'Thèmes', path: '/themes' },
   { icon: HelpCircle, label: 'Quiz', path: '/quizzes' },
+  { icon: Trophy, label: 'Classement', path: '/leaderboard' },
   { icon: FileText, label: 'Blog', path: '/blog' },
   { icon: MessageSquare, label: 'Forum', path: '/forum' },
   { icon: FolderOpen, label: 'Catégories Forum', path: '/forum/categories' },
   { icon: Users, label: 'Utilisateurs', path: '/users' },
   { icon: Database, label: 'Base RAG', path: '/documents' },
   { icon: Bot, label: 'Assistant DEC', path: '/chatbot' },
+  { icon: Bot, label: 'Thématiques Chatbot', path: '/admin/chatbot-topics' },
   { icon: Crown, label: 'Abonnements', path: '/admin/subscriptions' },
+  { icon: Mail, label: 'Envoyer Email', path: '/admin/email' },
 ];
 
 const userAccountMenuItems = [
@@ -67,10 +73,10 @@ export function Sidebar() {
 
   const isPremium = user?.isPremium || false;
 
-  // Filter user menu items based on premium status (chatbot only for premium)
+  // Filter user menu items based on premium status
   const filteredUserMenuItems = userMainMenuItems.filter(item => {
-    if (item.path === '/chatbot') {
-      return isPremium; // Only show chatbot for premium users
+    if (item.path === '/chatbot' || (item as { premiumOnly?: boolean }).premiumOnly) {
+      return isPremium; // Only show premium features for premium users
     }
     return true;
   });

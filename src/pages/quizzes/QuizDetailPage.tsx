@@ -25,6 +25,7 @@ import {
   Lock,
   RotateCcw,
   XCircle,
+  Lightbulb,
   Wand2,
   Eye,
   FileWarning,
@@ -54,6 +55,7 @@ interface Option {
   id?: string;
   content: string;
   isCorrect: boolean;
+  explanation?: string;
 }
 
 interface Question {
@@ -105,10 +107,10 @@ export function QuizDetailPage() {
     content: '',
     type: 'QCU' as 'QCM' | 'QCU',
     options: [
-      { content: '', isCorrect: false },
-      { content: '', isCorrect: false },
-      { content: '', isCorrect: false },
-      { content: '', isCorrect: false },
+      { content: '', isCorrect: false, explanation: '' },
+      { content: '', isCorrect: false, explanation: '' },
+      { content: '', isCorrect: false, explanation: '' },
+      { content: '', isCorrect: false, explanation: '' },
     ] as Option[],
   });
 
@@ -185,7 +187,9 @@ export function QuizDetailPage() {
 
   const fetchQuiz = async () => {
     try {
-      const response = await api.get(`/quizzes/${id}`);
+      // Admin users get the full quiz with explanations
+      const endpoint = isAdmin ? `/quizzes/${id}/admin` : `/quizzes/${id}`;
+      const response = await api.get(endpoint);
       setQuiz(response.data);
       setTimeLeft(response.data.timeLimit * 60);
 
@@ -294,7 +298,7 @@ export function QuizDetailPage() {
       setQuestionForm({
         content: question.content,
         type: question.type,
-        options: question.options.map((o) => ({ content: o.content, isCorrect: o.isCorrect })),
+        options: question.options.map((o) => ({ content: o.content, isCorrect: o.isCorrect, explanation: o.explanation || '' })),
       });
     } else {
       setEditingQuestion(null);
@@ -302,10 +306,10 @@ export function QuizDetailPage() {
         content: '',
         type: 'QCU',
         options: [
-          { content: '', isCorrect: false },
-          { content: '', isCorrect: false },
-          { content: '', isCorrect: false },
-          { content: '', isCorrect: false },
+          { content: '', isCorrect: false, explanation: '' },
+          { content: '', isCorrect: false, explanation: '' },
+          { content: '', isCorrect: false, explanation: '' },
+          { content: '', isCorrect: false, explanation: '' },
         ],
       });
     }
@@ -397,18 +401,24 @@ export function QuizDetailPage() {
     const filteredOptions = questionForm.options.filter((o) => o.content.trim());
 
     try {
-      const payload = {
-        quizId: id,
-        content: questionForm.content,
-        type: questionForm.type,
-        options: filteredOptions,
-      };
-
       if (editingQuestion) {
-        await api.patch(`/quizzes/questions/${editingQuestion.id}`, payload);
+        // Update: don't send quizId
+        const updatePayload = {
+          content: questionForm.content,
+          type: questionForm.type,
+          options: filteredOptions,
+        };
+        await api.patch(`/quizzes/questions/${editingQuestion.id}`, updatePayload);
         toast({ title: 'Question modifiée avec succès' });
       } else {
-        await api.post('/quizzes/questions', payload);
+        // Create: include quizId
+        const createPayload = {
+          quizId: id,
+          content: questionForm.content,
+          type: questionForm.type,
+          options: filteredOptions,
+        };
+        await api.post('/quizzes/questions', createPayload);
         toast({ title: 'Question ajoutée avec succès' });
       }
 
@@ -563,9 +573,20 @@ export function QuizDetailPage() {
     setQuizResult(null);
   };
 
-  const handleViewCorrection = () => {
+  const handleViewCorrection = async () => {
     setQuizResult(null);
-    setShowCorrection(true);
+    try {
+      // Load quiz with corrections (includes explanations)
+      const response = await api.get(`/quizzes/${id}/correction`);
+      setQuiz(response.data);
+      setShowCorrection(true);
+    } catch (error) {
+      toast({
+        title: 'Erreur',
+        description: 'Impossible de charger la correction',
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleSelectOption = (questionId: string, optionId: string) => {
@@ -1013,6 +1034,7 @@ export function QuizDetailPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6 }}
+                className="flex gap-4 justify-center"
               >
                 <Button
                   variant="outline"
@@ -1022,6 +1044,15 @@ export function QuizDetailPage() {
                   }}
                 >
                   Annuler
+                </Button>
+                <Button
+                  className="bg-gradient-to-r from-[#1B5E3D] to-[#3D9A6A] hover:from-[#164a31] hover:to-[#2d7a54] text-white"
+                  onClick={() => {
+                    setIsCountdown(false);
+                    setIsPlaying(true);
+                  }}
+                >
+                  Commencer maintenant
                 </Button>
               </motion.div>
             </CardContent>
@@ -1082,28 +1113,56 @@ export function QuizDetailPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <div className="grid gap-2 sm:grid-cols-2">
+                  <div className="space-y-3">
                     {question.options.map((option, idx) => (
                       <div
                         key={option.id}
                         className={cn(
-                          'p-3 rounded-xl border-2 text-sm flex items-center gap-3',
+                          'p-4 rounded-xl border-2 text-sm',
                           option.isCorrect
                             ? 'border-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 dark:border-emerald-700'
-                            : 'border-muted bg-muted/30'
+                            : 'border-rose-200 bg-rose-50/50 dark:bg-rose-900/20 dark:border-rose-700/50'
                         )}
                       >
-                        <span className={cn(
-                          'flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold',
-                          option.isCorrect
-                            ? 'bg-emerald-500 text-white'
-                            : 'bg-muted'
-                        )}>
-                          {['A', 'B', 'C', 'D', 'E', 'F'][idx]}
-                        </span>
-                        <span className="flex-1">{option.content}</span>
-                        {option.isCorrect && (
-                          <CheckCircle className="h-5 w-5 text-emerald-500 flex-shrink-0" />
+                        <div className="flex items-center gap-3">
+                          <span className={cn(
+                            'flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold',
+                            option.isCorrect
+                              ? 'bg-emerald-500 text-white'
+                              : 'bg-rose-200 dark:bg-rose-800 text-rose-700 dark:text-rose-200'
+                          )}>
+                            {['A', 'B', 'C', 'D', 'E', 'F'][idx]}
+                          </span>
+                          <span className="flex-1 font-medium">{option.content}</span>
+                          {option.isCorrect ? (
+                            <CheckCircle className="h-5 w-5 text-emerald-500 flex-shrink-0" />
+                          ) : (
+                            <XCircle className="h-5 w-5 text-rose-400 flex-shrink-0" />
+                          )}
+                        </div>
+                        {option.explanation && (
+                          <div className={cn(
+                            'mt-3 pt-3 border-t text-sm',
+                            option.isCorrect
+                              ? 'border-emerald-200 dark:border-emerald-700/50'
+                              : 'border-rose-200 dark:border-rose-700/50'
+                          )}>
+                            <div className="flex items-start gap-2">
+                              <Lightbulb className={cn(
+                                'h-4 w-4 mt-0.5 flex-shrink-0',
+                                option.isCorrect
+                                  ? 'text-emerald-600 dark:text-emerald-400'
+                                  : 'text-rose-500 dark:text-rose-400'
+                              )} />
+                              <p className={cn(
+                                option.isCorrect
+                                  ? 'text-emerald-700 dark:text-emerald-300'
+                                  : 'text-rose-600 dark:text-rose-300'
+                              )}>
+                                {option.explanation}
+                              </p>
+                            </div>
+                          </div>
                         )}
                       </div>
                     ))}
@@ -1667,28 +1726,36 @@ export function QuizDetailPage() {
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <div className="grid gap-2 sm:grid-cols-2">
+                      <div className="space-y-2">
                         {question.options.map((option, idx) => (
                           <div
                             key={option.id}
                             className={cn(
-                              'p-3 rounded-xl border-2 text-sm flex items-center gap-3',
+                              'p-3 rounded-xl border-2 text-sm',
                               option.isCorrect
                                 ? 'border-emerald-300 bg-emerald-50 dark:bg-emerald-900/20 dark:border-emerald-800'
                                 : 'border-muted bg-muted/30'
                             )}
                           >
-                            <span className={cn(
-                              'flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold',
-                              option.isCorrect
-                                ? 'bg-emerald-500 text-white'
-                                : 'bg-muted'
-                            )}>
-                              {['A', 'B', 'C', 'D'][idx]}
-                            </span>
-                            <span className="flex-1">{option.content}</span>
-                            {option.isCorrect && (
-                              <CheckCircle className="h-5 w-5 text-emerald-500 flex-shrink-0" />
+                            <div className="flex items-center gap-3">
+                              <span className={cn(
+                                'flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold',
+                                option.isCorrect
+                                  ? 'bg-emerald-500 text-white'
+                                  : 'bg-muted'
+                              )}>
+                                {['A', 'B', 'C', 'D'][idx]}
+                              </span>
+                              <span className="flex-1">{option.content}</span>
+                              {option.isCorrect && (
+                                <CheckCircle className="h-5 w-5 text-emerald-500 flex-shrink-0" />
+                              )}
+                            </div>
+                            {option.explanation && (
+                              <div className="mt-2 ml-10 flex items-start gap-2 text-xs text-muted-foreground">
+                                <Lightbulb className="h-3.5 w-3.5 mt-0.5 flex-shrink-0 text-amber-500" />
+                                <span>{option.explanation}</span>
+                              </div>
                             )}
                           </div>
                         ))}
@@ -1752,50 +1819,67 @@ export function QuizDetailPage() {
                     : 'Cochez toutes les bonnes réponses'}
                 </p>
                 {questionForm.options.map((option, index) => (
-                  <div key={index} className="flex items-center gap-3">
-                    <div className={cn(
-                      'flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold',
-                      option.isCorrect ? 'bg-emerald-500 text-white' : 'bg-muted'
-                    )}>
-                      {['A', 'B', 'C', 'D'][index]}
-                    </div>
-                    <input
-                      type={questionForm.type === 'QCU' ? 'radio' : 'checkbox'}
-                      name="correctOption"
-                      checked={option.isCorrect}
-                      onChange={() => {
-                        if (questionForm.type === 'QCU') {
-                          setQuestionForm({
-                            ...questionForm,
-                            options: questionForm.options.map((o, i) => ({
-                              ...o,
-                              isCorrect: i === index,
-                            })),
-                          });
-                        } else {
+                  <div key={index} className="space-y-2 p-3 rounded-lg border border-input bg-muted/30">
+                    <div className="flex items-center gap-3">
+                      <div className={cn(
+                        'flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold',
+                        option.isCorrect ? 'bg-emerald-500 text-white' : 'bg-muted'
+                      )}>
+                        {['A', 'B', 'C', 'D'][index]}
+                      </div>
+                      <input
+                        type={questionForm.type === 'QCU' ? 'radio' : 'checkbox'}
+                        name="correctOption"
+                        checked={option.isCorrect}
+                        onChange={() => {
+                          if (questionForm.type === 'QCU') {
+                            setQuestionForm({
+                              ...questionForm,
+                              options: questionForm.options.map((o, i) => ({
+                                ...o,
+                                isCorrect: i === index,
+                              })),
+                            });
+                          } else {
+                            setQuestionForm({
+                              ...questionForm,
+                              options: questionForm.options.map((o, i) =>
+                                i === index ? { ...o, isCorrect: !o.isCorrect } : o
+                              ),
+                            });
+                          }
+                        }}
+                        className="h-5 w-5 accent-emerald-500"
+                      />
+                      <Input
+                        value={option.content}
+                        onChange={(e) =>
                           setQuestionForm({
                             ...questionForm,
                             options: questionForm.options.map((o, i) =>
-                              i === index ? { ...o, isCorrect: !o.isCorrect } : o
+                              i === index ? { ...o, content: e.target.value } : o
                             ),
-                          });
+                          })
                         }
-                      }}
-                      className="h-5 w-5 accent-emerald-500"
-                    />
-                    <Input
-                      value={option.content}
-                      onChange={(e) =>
-                        setQuestionForm({
-                          ...questionForm,
-                          options: questionForm.options.map((o, i) =>
-                            i === index ? { ...o, content: e.target.value } : o
-                          ),
-                        })
-                      }
-                      placeholder={`Option ${index + 1}`}
-                      className="flex-1"
-                    />
+                        placeholder={`Option ${index + 1}`}
+                        className="flex-1"
+                      />
+                    </div>
+                    <div className="ml-11">
+                      <Input
+                        value={option.explanation || ''}
+                        onChange={(e) =>
+                          setQuestionForm({
+                            ...questionForm,
+                            options: questionForm.options.map((o, i) =>
+                              i === index ? { ...o, explanation: e.target.value } : o
+                            ),
+                          })
+                        }
+                        placeholder="Explication (affichée lors de la correction)"
+                        className="text-sm"
+                      />
+                    </div>
                   </div>
                 ))}
               </div>

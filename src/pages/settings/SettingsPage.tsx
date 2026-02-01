@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   Settings,
@@ -59,9 +59,9 @@ export function SettingsPage() {
   const { toast } = useToast();
 
   const [notifications, setNotifications] = useState({
-    email: true,
-    push: true,
-    marketing: false,
+    email: user?.emailNotifications ?? true,
+    push: user?.pushNotifications ?? true,
+    marketing: user?.marketingEmails ?? false,
   });
 
   const [privacy, setPrivacy] = useState({
@@ -70,6 +70,49 @@ export function SettingsPage() {
   });
 
   const [showInLeaderboard, setShowInLeaderboard] = useState(user?.showInLeaderboard ?? true);
+  const [isSavingNotifications, setIsSavingNotifications] = useState(false);
+
+  // Sync notifications state when user data changes
+  useEffect(() => {
+    if (user) {
+      setNotifications({
+        email: user.emailNotifications ?? true,
+        push: user.pushNotifications ?? true,
+        marketing: user.marketingEmails ?? false,
+      });
+    }
+  }, [user]);
+
+  const handleNotificationChange = async (key: 'email' | 'push' | 'marketing', checked: boolean) => {
+    const newNotifications = { ...notifications, [key]: checked };
+    setNotifications(newNotifications);
+    setIsSavingNotifications(true);
+
+    try {
+      const response = await api.patch('/auth/profile', {
+        emailNotifications: newNotifications.email,
+        pushNotifications: newNotifications.push,
+        marketingEmails: newNotifications.marketing,
+      });
+      if (response.data.user) {
+        updateUser(response.data.user);
+      }
+      toast({
+        title: 'Préférences mises à jour',
+        description: 'Vos préférences de notification ont été enregistrées.',
+      });
+    } catch {
+      // Revert on error
+      setNotifications(notifications);
+      toast({
+        title: 'Erreur',
+        description: 'Impossible de mettre à jour les préférences.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSavingNotifications(false);
+    }
+  };
 
   const [passwords, setPasswords] = useState({
     current: '',
@@ -263,10 +306,13 @@ export function SettingsPage() {
                     Recevez des mises à jour par email
                   </p>
                 </div>
-                <SettingsSwitch
-                  checked={notifications.email}
-                  onChange={(checked) => setNotifications({ ...notifications, email: checked })}
-                />
+                <div className="flex items-center gap-2">
+                  {isSavingNotifications && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
+                  <SettingsSwitch
+                    checked={notifications.email}
+                    onChange={(checked) => handleNotificationChange('email', checked)}
+                  />
+                </div>
               </div>
               <Separator />
               <div className="flex items-center justify-between">
@@ -278,7 +324,7 @@ export function SettingsPage() {
                 </div>
                 <SettingsSwitch
                   checked={notifications.push}
-                  onChange={(checked) => setNotifications({ ...notifications, push: checked })}
+                  onChange={(checked) => handleNotificationChange('push', checked)}
                 />
               </div>
               <Separator />
@@ -291,7 +337,7 @@ export function SettingsPage() {
                 </div>
                 <SettingsSwitch
                   checked={notifications.marketing}
-                  onChange={(checked) => setNotifications({ ...notifications, marketing: checked })}
+                  onChange={(checked) => handleNotificationChange('marketing', checked)}
                 />
               </div>
             </CardContent>

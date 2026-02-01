@@ -34,6 +34,9 @@ import { PremiumPage } from '@/pages/premium/PremiumPage';
 import { PremiumSuccessPage } from '@/pages/premium/PremiumSuccessPage';
 import { PremiumCancelPage } from '@/pages/premium/PremiumCancelPage';
 import { AdminSubscriptionsPage } from '@/pages/admin/AdminSubscriptionsPage';
+import { ChatbotTopicsPage } from '@/pages/admin/ChatbotTopicsPage';
+import RevisionQuizPage from '@/pages/quizzes/RevisionQuizPage';
+import AdminEmailPage from '@/pages/admin/AdminEmailPage';
 import { useAuthStore } from '@/store/auth';
 import './index.css';
 
@@ -98,6 +101,7 @@ function App() {
             <Route path="/themes" element={<ThemesPage />} />
             <Route path="/quizzes" element={<QuizzesPage />} />
             <Route path="/quizzes/:id" element={<QuizDetailPage />} />
+            <Route path="/revision" element={<RevisionQuizPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/categories" element={<BlogCategoriesPage />} />
             <Route path="/blog/new" element={<ArticleEditorPage />} />
@@ -117,6 +121,8 @@ function App() {
             <Route path="/premium/success" element={<PremiumSuccessPage />} />
             <Route path="/premium/cancel" element={<PremiumCancelPage />} />
             <Route path="/admin/subscriptions" element={<AdminSubscriptionsPage />} />
+            <Route path="/admin/chatbot-topics" element={<ChatbotTopicsPage />} />
+            <Route path="/admin/email" element={<AdminEmailPage />} />
           </Route>
 
           {/* Fallback */}
